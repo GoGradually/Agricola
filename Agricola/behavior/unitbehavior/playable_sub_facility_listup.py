@@ -8,16 +8,16 @@ from command import Command
 from repository.player_status_repository import player_status_repository
 
 
-class PlayableSubFacilityListup(Command):
+class PlayableSubCardListup(Command):
 
     def __init__(self, player):
         self.log_text = ""
-        self.subFacilityList = self.player_ownCard = player_status_repository.player_status[player].own_card.handSubCard
+        self.subFacilityList = self.player_ownCard = player_status_repository.player_status[player].own_card.hand_sub_card
 
     def execute(self):
-        canUseSubFacilityList = [subFac for subFac in self.subFacilityList if subFac.canPutDown]
-        self.log_text = "구매 가능한 보조 설비를 확인했습니다"
-        return canUseSubFacilityList
+        can_use_sub_facility_list = [subFac for subFac in self.subFacilityList if subFac.canPutDown()]
+        self.log_text = ""
+        return can_use_sub_facility_list
 
     def log(self):
         return self.log_text

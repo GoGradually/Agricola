@@ -7,14 +7,15 @@ Unit : 종훈
 """
 from copy import deepcopy
 
+from behavior.basebehavior.base_behavior_interface import BaseBehaviorInterface
 from command import Command
 from entity.field_type import FieldType
 
 
-class AnimalPositionValidation(Command):
+class AnimalPositionValidation(BaseBehaviorInterface):
     def __init__(self, field_status):
         self.field_status = deepcopy(field_status)
-        self.log_text = None
+        self.log_text = ""
 
     def execute(self):
         return self.animal_count_validation()
@@ -25,6 +26,9 @@ class AnimalPositionValidation(Command):
                 if item.field_type == FieldType.CAGE or item.field_type == FieldType.NONE_FIELD:
                     if item.count >= item.maximum:
                         self.log_text = f"({i}, {j})위치에 동물이 너무 많습니다."
+                        return False
+                    elif item.count < 0:
+                        self.log_text = f"({i}, {j})위치의 동물의 수가 음수입니다."
                         return False
         return True
 

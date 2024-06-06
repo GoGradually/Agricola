@@ -84,3 +84,9 @@ class GameContext:
 
     def set_state(self, state):
         self.state = state
+
+    def next_state(self):
+        return self.state.next_state()
+
+
+game_context = GameContext()

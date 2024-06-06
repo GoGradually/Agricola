@@ -4,15 +4,14 @@
 :return: 실행 결과.
 :rtype: bool
 """
-from command import Command
+from behavior.basebehavior.construct_fence import ConstructFence
+from behavior.behavior_interface import BehaviorInterface
+from behavior.unitbehavior.use_worker import UseWorker
 
 
-# Todo
-
-class FenceConstructionRound(Command):
-
+class FenceConstructionRound(BehaviorInterface):
     def execute(self):
-        pass
+        return [ConstructFence, UseWorker]
 
     def log(self):
         pass
