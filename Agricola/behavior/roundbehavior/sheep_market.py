@@ -18,18 +18,19 @@ from entity.animal_type import AnimalType
 class SheepMarket(Command):
 
     def __init__(self, player):
-        self.log_text = None
+        self.log_text = ""
         self.game_status = game_status_repository.game_status
         self.player_resource = player_status_repository.player_status[player].resource
         self.is_filled = round_status_repository.round_status.put_basic[RoundBehaviorType.SHEEP1.value]
 
+    def can_play(self):
+        return True
+
     def execute(self):
-        if self.is_filled:
-            self.log_text = "이번 라운드에 이미 수행된 행동입니다."
-            return False
         animal_dict = {AnimalType.SHEEP: self.game_status.basic_resource[RoundBehaviorType.SHEEP1.value]}
         self.log_text = f"양 {self.game_status.basic_resource[RoundBehaviorType.SHEEP1.value]}마리를 획득하였습니다."
         self.game_status.set_basic_resource(RoundBehaviorType.SHEEP1.value, 0)
+        round_status_repository.round_status.remain_workers[game_status_repository.game_status.now_turn_player] -= 1
         return animal_dict
 
     def log(self):

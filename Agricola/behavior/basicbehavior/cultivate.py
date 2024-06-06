@@ -16,22 +16,20 @@ from behavior.basebehavior.arable_expansion import ArableExpansion
 # Todo
 
 class Cultivate(Command):
-    def __init__(self, player):
-        self.log_text = None
-        self.game_status = game_status_repository.game_status
-        self.player_farm = player_status_repository.player_status[player].farm
-        self.is_filled = round_status_repository.round_status.put_basic[BasicBehaviorType.CULTIVATE.value]
+    def __init__(self, field_status):
+        self.log_text = ""
+        self.field_status = field_status
+
+    def can_play(self):
+        return True
 
     def execute(self):
-        if self.is_filled:
-            self.log_text = "이번 라운드에 이미 수행된 행동입니다."
-            return False
-        doArable = ArableExpansion(self.player_farm)
-        if (doArable.execute()):
-            self.log_text = f"밭 {self.game_status.basic_resource[BasicBehaviorType.CULTIVATE.value]}개를 일구었습니다."
+        doArable = ArableExpansion(self.field_status)
+        if doArable.execute():
+            self.log_text = "밭을 일구었습니다."
             return True
         else:
-            self.log_text = f"밭을 일구지 못했습니다."
+            self.log_text = doArable.log()
             return False
 
     def log(self):

@@ -5,23 +5,34 @@
 :rtype: bool
 """
 from command import Command
+from repository.game_status_repository import game_status_repository
 from repository.player_status_repository import player_status_repository
+from repository.round_status_repository import round_status_repository
 
 
 # Todo
 
 class Facilities(Command):
     def __init__(self, player, selectedCard, isMain):
-        self.log_text = None
+        self.log_text = ""
         self.playerResource = player_status_repository.player_status[player].resource
         self.playerCard = player_status_repository.player_status[player].card
         self.selectedCard = selectedCard
         self.isMain = isMain
 
-    def execute(self):
-        if (self.selectedCard.canPurchase(self.playerResource)):
+    def can_play(self):
+        if (self.selectedCard.canPurchase(self.player)):
             self.log_text = "카드 구매가 가능합니다"
-            return True # 프런트에서 진짜 살지 물어보고 true false 로 base/behavior/purchaseCard 실행
+            return True
+        else:
+            self.log_text = "카드 구매에 실패했습니다"
+            return False
+
+    def execute(self):
+        if (self.selectedCard.purchase(self.player)):
+            self.log_text = "카드 구매에 성공했습니다"
+            round_status_repository.round_status.remain_workers[game_status_repository.game_status.now_turn_player] -= 1
+            return True
         else:
             self.log_text = "카드 구매에 실패했습니다"
             return False
