@@ -5,7 +5,6 @@
 :rtype: bool
 """
 from behavior.behavior_interface import BehaviorInterface
-from behavior.unitbehavior.use_worker import UseWorker
 from command import Command
 from entity.basic_behavior_type import BasicBehaviorType
 from repository.game_status_repository import game_status_repository
