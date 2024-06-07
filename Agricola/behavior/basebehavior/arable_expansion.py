@@ -6,7 +6,7 @@
 실제 밭 정보를 업데이트한다.
 """
 from command import Command
-from arable_expand_validation import ArableExpandValidation
+from behavior.validation.arable_expand_validation import ArableExpandValidation
 
 
 class ArableExpansion(Command):

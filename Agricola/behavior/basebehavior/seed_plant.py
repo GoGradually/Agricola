@@ -1,5 +1,5 @@
 from command import Command
-from seed_plant_validation import SeedPlantValidation
+from behavior.validation.seed_plant_validation import SeedPlantValidation
 
 
 class SeedPlant(Command):

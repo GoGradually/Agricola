@@ -7,7 +7,7 @@
 농장 상태 업데이트도 수행되어야 함
 """
 from command import Command
-from fence_validation import FenceValidation
+from behavior.validation.fence_validation import FenceValidation
 
 
 # Todo

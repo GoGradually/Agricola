@@ -6,7 +6,7 @@
 농장 상태 업데이트도 수행되어야 함.
 """
 from command import Command
-from house_expand_validation import HouseExpandValidation
+from behavior.validation.house_expand_validation import HouseExpandValidation
 
 
 class HouseExpansion(Command):
