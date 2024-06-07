@@ -1,11 +1,8 @@
 """
 흙 4개 화덕
 """
-from behavior.basebehavior.do_bake import DoBake
 from behavior.basebehavior.dump_animal import DumpAnimal
 from behavior.main_facility.main_facility_interface import MainFacilityInterface
-from behavior.main_facility.oven1 import Oven1
-from behavior.main_facility.oven2 import Oven2
 from behavior.roundbehavior.cultivate_seed import CultivateSeed
 from behavior.roundbehavior.seed_bake import SeedBake
 from entity import card_type
@@ -45,13 +42,7 @@ class StrongOven1(MainFacilityInterface):
     """
 
     def execute(self):
-        doBake = DoBake()
-        if doBake.execute():
-            self.log_text = "빵 굽기를 완료했습니다"
-            return True
-        else:
-            self.log_text = "빵 굽기를 실패했습니다"
-            return False
+        pass
 
     def doChange(self, resource_type, resource_value, pos):  # 화로 기능 아무떄나 처리하는 함수 빵굽기는 execute()
         # resource_type => 0 - 채소 1 - 양 2- 돼지 3 - 소

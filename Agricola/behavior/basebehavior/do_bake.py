@@ -4,7 +4,6 @@
 """
 from behavior.basebehavior.base_behavior_interface import BaseBehaviorInterface
 from behavior.main_facility.dirt_kiln import DirtKiln
-from command import Command
 from repository.game_status_repository import game_status_repository
 from repository.player_status_repository import player_status_repository
 from behavior.main_facility.oven1 import Oven1
