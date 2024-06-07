@@ -89,8 +89,7 @@ class StrongOven2(MainFacilityInterface):
     :rtype: bool
     """
 
-    def purchaseMoney(self, returnOven):  # 화덕은 purchase()가 아나라 이 함수로 구매 접근
-        # 이 함수에서 purchase() 호출하므로 무조건 구매시 purchaseMoney 사용
+    def purchase(self):
         if (any(mainCard.main_card_type in (MainFacilityType.OVEN1, MainFacilityType.OVEN2) for mainCard in
                 self.player_data.card.putMainCard)):
             for mainCard in self.player_data.card.putMainCard:
