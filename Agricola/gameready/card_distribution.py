@@ -62,10 +62,9 @@ class CardDistribution(Command):
                 if sub_card_list[i * 3 + j] == 10:
                     player_status_repository.player_status[i].card.hand_sub_card.append(SilPan)
                 if sub_card_list[i * 3 + j] == 11:
-                    player_status_repository.player_status[i].card.hand_sub_card.append( \
-                        WoolBlanket())
-            player_status_repository.player_status[i].card.start_sub_card = (
-                deepcopy(player_status_repository.player_status[i].card.hand_sub_card))
+                    player_status_repository.player_status[i].card.hand_sub_card.append(WoolBlanket)
+            player_status_repository.player_status[i].card.start_sub_card = \
+                deepcopy(player_status_repository.player_status[i].card.hand_sub_card)
 
         job_card_list = random.sample(range(12), 12)
         for i in range(4):
@@ -93,10 +92,9 @@ class CardDistribution(Command):
                 if job_card_list[i * 3 + j] == 10:
                     player_status_repository.player_status[i].card.hand_job_card.append(SubCultivator)
                 if job_card_list[i * 3 + j] == 11:
-                    player_status_repository.player_status[i].card.hand_job_card.append( \
-                        WarehouseManager())
-            player_status_repository.player_status[i].card.start_job_card = (
-                deepcopy(player_status_repository.player_status[i].card.hand_job_card))
+                    player_status_repository.player_status[i].card.hand_job_card.append(WarehouseManager)
+            player_status_repository.player_status[i].card.start_job_card = \
+                deepcopy(player_status_repository.player_status[i].card.hand_job_card)
 
     def log(self):
         pass
