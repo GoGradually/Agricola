@@ -17,6 +17,7 @@ class DirtKiln(MainFacilityInterface):
         self.game_status = game_status_repository.game_status
         self.player_data = player_status_repository.player_status[
             game_status_repository.game_status.now_turn_player]
+        self.score = 2
 
     """
     사용 가능 여부를 반환하는 메소드

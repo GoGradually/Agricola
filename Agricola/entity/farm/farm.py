@@ -103,6 +103,14 @@ class Farm:
                     ret += 1
         return ret
 
+    def get_barn_with_fence_count(self): # 울타리 안의 외양간 == field.maximum>=1이면 울타리 안이다
+        ret = 0
+        for fields in self.field:
+            for field in fields:
+                if field.barn is True and field.maximum >= 1:
+                    ret += 1
+        return ret
+
     def get_house_count(self):
         ret = 0
         for fields in self.field:
@@ -123,7 +131,7 @@ class Farm:
         ret = 0
         for fields in self.field:
             for field in fields:
-                if isinstance(field,NoneField):
+                if isinstance(field, NoneField):
                     ret += 1
         return ret
 

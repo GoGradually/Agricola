@@ -7,6 +7,7 @@ from entity import card_type
 from repository.game_status_repository import game_status_repository
 from repository.player_status_repository import player_status_repository
 
+
 class Greengrocer(JobInterface):
 
     def __init__(self, input_behavior):
@@ -22,7 +23,8 @@ class Greengrocer(JobInterface):
     """
 
     def canUse(self):
-        current_player_cards = player_status_repository.player_status[game_status_repository.game_status.now_turn_player].card.put_job_card
+        current_player_cards = player_status_repository.player_status[
+            game_status_repository.game_status.now_turn_player].card.put_job_card
         greengrocer_card_present = any(isinstance(card, Greengrocer) for card in current_player_cards)
 
         if isinstance(self.input_behavior, Seed) and greengrocer_card_present:

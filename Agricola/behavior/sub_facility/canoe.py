@@ -14,7 +14,7 @@ class Canoe(SubFacilityInterface):
         self.log_text = None
         self.input_behavior = input_behavior
         self.card_type = card_type.CardType.sub_facility
-
+        self.score = 0
     """
     사용 가능 여부를 반환하는 메소드
     :param:
