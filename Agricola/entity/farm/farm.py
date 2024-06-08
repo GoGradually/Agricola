@@ -4,6 +4,7 @@
 from typing import List
 
 from entity.animal_type import AnimalType
+from entity.crop_type import CropType
 from entity.farm.cage import Cage
 from entity.farm.field import Field
 from entity.farm.house import House
@@ -103,7 +104,7 @@ class Farm:
                     ret += 1
         return ret
 
-    def get_barn_with_fence_count(self): # 울타리 안의 외양간 == field.maximum>=1이면 울타리 안이다
+    def get_barn_with_fence_count(self):  # 울타리 안의 외양간 == field.maximum>=1이면 울타리 안이다
         ret = 0
         for fields in self.field:
             for field in fields:
@@ -125,6 +126,22 @@ class Farm:
             for field in fields:
                 if field.field_type == FieldType.ARABLE:
                     ret += 1
+        return ret
+
+    def get_arable_count_grain(self):
+        ret = 0
+        for fields in self.field:
+            for field in fields:
+                if field.field_type == FieldType.ARABLE and field.kind == CropType.GRAIN:
+                    ret += field.count
+        return ret
+
+    def get_arable_count_vegetable(self):
+        ret = 0
+        for fields in self.field:
+            for field in fields:
+                if field.field_type == FieldType.ARABLE and field.kind == CropType.VEGETABLE:
+                    ret += field.count
         return ret
 
     def get_none_field_count(self):
