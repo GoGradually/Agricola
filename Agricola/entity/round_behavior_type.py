@@ -1,7 +1,7 @@
 """
 라운드 행동 Enum
 """
-from enum import Enum, member
+from enum import Enum
 
 
 class RoundBehaviorType(Enum):

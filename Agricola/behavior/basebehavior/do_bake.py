@@ -3,10 +3,9 @@
 빵 굽기 가능 여부 ->
 """
 from behavior.basebehavior.base_behavior_interface import BaseBehaviorInterface
-from behavior.main_facility.dirt_kiln import DirtKiln
-from command import Command
 from repository.game_status_repository import game_status_repository
 from repository.player_status_repository import player_status_repository
+from behavior.main_facility.dirt_kiln import DirtKiln
 from behavior.main_facility.oven1 import Oven1
 from behavior.main_facility.oven2 import Oven2
 from behavior.main_facility.strong_oven1 import StrongOven1
@@ -14,7 +13,6 @@ from behavior.main_facility.strong_oven2 import StrongOven2
 
 
 class DoBake(BaseBehaviorInterface):
-
     def __init__(self, cookValue):
         self.log_text = ""
         self.game_status = game_status_repository.game_status

@@ -2,8 +2,6 @@
 흙가마
 """
 from behavior.main_facility.main_facility_interface import MainFacilityInterface
-from behavior.roundbehavior.cultivate_seed import CultivateSeed
-from behavior.roundbehavior.seed_bake import SeedBake
 from entity import card_type
 from entity.main_facility_type import MainFacilityType
 from repository.game_status_repository import game_status_repository
@@ -28,9 +26,7 @@ class DirtKiln(MainFacilityInterface):
     """
 
     def canUse(self):
-        isinstance(self.input_behavior,
-                   (SeedBake, CultivateSeed)) and (not (
-                self.player_data.resource.grain == 0))
+        pass
 
     """
     카드 사용 메소드
@@ -72,4 +68,4 @@ class DirtKiln(MainFacilityInterface):
     """
 
     def canPurchase(self):
-        return self.player_data.resource.dirt >= 3 and self.player_data.resource.stone >= 1
+        return self.player_data.resource.dirt >= 3 and self.player_data.resource.stone >= 1 and  self.game_status.main_facility_status[0] == -1

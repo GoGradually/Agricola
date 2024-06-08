@@ -34,7 +34,7 @@ class FenceValidation(Command):
                             continue
                         if self.field_status[p][q] == FieldType.FENCE:
                             adjacent += 1
-                    if adjacent is 1:
+                    if adjacent == 1:
                         self.log_text = "울타리의 형식이 올바르지 않습니다."
                         return False
         return True

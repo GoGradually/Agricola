@@ -1,7 +1,6 @@
 """
 가마 때는 사람 직업 카드
 """
-from behavior.basebehavior import do_bake
 from behavior.job.job_interface import JobInterface
 from behavior.basicbehavior.wood1 import Wood1
 from behavior.basicbehavior.wood2 import Wood2
@@ -39,9 +38,6 @@ class KilnBaker(JobInterface):
     :rtype: bool
     """
     def execute(self):
-        player = game_status_repository.game_status.now_turn_player
-        do_bake_instance = do_bake.DoBake(player)
-        do_bake_instance.execute()
         self.log_text = "가마 때는 사람 사용"
 
     """

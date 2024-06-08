@@ -1,11 +1,8 @@
 """
 흙 2개 화로
 """
-from behavior.basebehavior.do_bake import DoBake
 from behavior.basebehavior.dump_animal import DumpAnimal
 from behavior.main_facility.main_facility_interface import MainFacilityInterface
-from behavior.roundbehavior.cultivate_seed import CultivateSeed
-from behavior.roundbehavior.seed_bake import SeedBake
 from entity import card_type
 from entity.main_facility_type import MainFacilityType
 from repository.game_status_repository import game_status_repository
@@ -31,9 +28,7 @@ class Oven1(MainFacilityInterface):
     """
 
     def canUse(self):
-        return isinstance(self.input_behavior,
-                          (SeedBake, CultivateSeed)) and (not (
-                self.player_data.resource.grain == 0))
+        pass
 
         """
         카드 사용 메소드
@@ -43,13 +38,7 @@ class Oven1(MainFacilityInterface):
         """
 
     def execute(self):
-        doBake = DoBake(False)
-        if doBake.execute():
-            self.log_text = "빵 굽기를 완료했습니다"
-            return True
-        else:
-            self.log_text = "빵 굽기를 실패했습니다"
-            return False
+        pass
 
     def doChange(self, resource_type, resource_value, pos): # 화로 기능 아무떄나 처리하는 함수 빵굽기는 execute()
         # resource_type => 0 - 채소 1 - 양 2- 돼지 3 - 소
@@ -112,4 +101,4 @@ class Oven1(MainFacilityInterface):
     """
 
     def canPurchase(self):
-        return self.player_data.resource.dirt >= 2
+        return self.player_data.resource.dirt >= 2 and  self.game_status.main_facility_status[1] == -1
