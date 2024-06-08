@@ -1,7 +1,6 @@
 """
 흙가마
 """
-from behavior.basebehavior.do_bake import DoBake
 from behavior.main_facility.main_facility_interface import MainFacilityInterface
 from behavior.roundbehavior.cultivate_seed import CultivateSeed
 from behavior.roundbehavior.seed_bake import SeedBake
@@ -41,13 +40,7 @@ class DirtKiln(MainFacilityInterface):
     """
 
     def execute(self):
-        doBake = DoBake(True)
-        if doBake.execute():
-            self.log_text = "빵 굽기를 완료했습니다"
-            return True
-        else:
-            self.log_text = "빵 굽기를 실패했습니다"
-            return False
+        pass
 
     """
     로그 반환
