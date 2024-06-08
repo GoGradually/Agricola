@@ -21,11 +21,14 @@ class ScoreCalculation(Command):
 
         grain_score = lambda \
                 value: 4 if value >= 8 else 3 if value >= 6 else 2 if value >= 4 else 1 if value >= 1 else -1
-        score += grain_score(self.player_status_list[self.playerNum].resource.grain)  # 곡식
+        score += grain_score(self.player_status_list[self.playerNum].resource.grain +
+                             self.player_status_list[self.playerNum].farm.get_arable_count_grain())  # 곡식
+        # 곡식과 채소는 현재 창고에 보유중인 갯수+ 밭에 심어져있는 갯수(수확여부 상관x)를 합해서 점수계산떄 사용
 
         vegetable_score = lambda \
                 value: 4 if value >= 4 else -1 if value == 0 else value
-        score += vegetable_score(self.player_status_list[self.playerNum].resource.vegetable)  # 채소
+        score += vegetable_score(self.player_status_list[self.playerNum].resource.vegetable +
+                                 self.player_status_list[self.playerNum].farm.get_arable_count_vegetable())  # 채소
 
         sheep_score = lambda \
                 value: 4 if value >= 8 else 3 if value >= 6 else 2 if value >= 4 else 1 if value >= 1 else -1
