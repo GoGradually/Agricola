@@ -9,8 +9,8 @@ import copy
 
 from behavior.basebehavior.base_behavior_interface import BaseBehaviorInterface
 from behavior.validation.arable_expand_validation import ArableExpandValidation
-from repository.game_status_repository import game_status_repository
-from repository.player_status_repository import player_status_repository
+
+
 
 
 class ArableExpansion(BaseBehaviorInterface):
@@ -23,7 +23,7 @@ class ArableExpansion(BaseBehaviorInterface):
         check_validation = ArableExpandValidation(self.field_status)
         if check_validation.execute():
             self.log_text = "밭 일구기 검증에 성공했습니다"
-            player_status_repository.player_status[game_status_repository.game_status.now_turn_player].farm.field = self.field_status
+            player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player].farm.field = self.field_status
             return True
         else:
             self.log_text = "밭 일구기 검증에 실패했습니다"

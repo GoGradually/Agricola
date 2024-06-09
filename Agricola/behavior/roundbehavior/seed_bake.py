@@ -9,8 +9,8 @@
 from behavior.basebehavior.do_bake import DoBake
 from behavior.behavior_interface import BehaviorInterface
 from behavior.unitbehavior.use_worker import UseWorker
-from repository.game_status_repository import game_status_repository
-from repository.player_status_repository import player_status_repository
+
+
 from behavior.basebehavior.seed_plant import SeedPlant
 
 
@@ -26,7 +26,7 @@ class SeedBake(BehaviorInterface):
 
     def execute(self):
         ret = [SeedPlant]
-        if player_status_repository.player_status[game_status_repository.game_status.now_turn_player].card.put_main_card:
+        if player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player].card.put_main_card:
             ret.append(DoBake)
         ret.append(UseWorker)
         return ret

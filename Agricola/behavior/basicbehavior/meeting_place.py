@@ -10,24 +10,24 @@ from behavior.unitbehavior.playable_sub_facility_listup import PlayableSubCardLi
 from behavior.unitbehavior.use_worker import UseWorker
 from command import Command
 from entity.basic_behavior_type import BasicBehaviorType
-from repository.game_status_repository import game_status_repository
-from repository.player_status_repository import player_status_repository
-from repository.round_status_repository import round_status_repository
+
+
+
 
 
 class MeetingPlace(BehaviorInterface):
     def __init__(self):
         self.log_text = ""
-        self.game_status = game_status_repository.game_status
-        player = game_status_repository.game_status.now_turn_player
-        self.player_resource = player_status_repository.player_status[player].resource
+        self.game_status =  game_status_repository.get_game_status()
+        player = game_status_repository.get_game_status().now_turn_player
+        self.player_resource = player_status_repository.get_player_status()[player].resource
         self.is_filled = round_status_repository.round_status.put_basic[BasicBehaviorType.MEETING.value]
 
     def can_play(self):
         return True
 
     def execute(self):
-        for player in player_status_repository.player_status:  # 기존 1등 선마커 뺏기
+        for player in player_status_repository.get_player_status():  # 기존 1등 선마커 뺏기
             if player.resource.first_turn:
                 player.resource.set_first_turn(False)
                 break

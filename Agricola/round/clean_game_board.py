@@ -2,7 +2,7 @@
 게임판을 정리하는 커맨드
 """
 from command import Command
-from repository.round_status_repository import round_status_repository
+
 
 
 class CleanGameBoard(Command):

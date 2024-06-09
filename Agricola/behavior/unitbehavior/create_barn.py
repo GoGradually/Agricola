@@ -10,8 +10,8 @@ from command import Command
 from entity.farm.field import Field
 from entity.farm.none_field import NoneField
 from entity.field_type import FieldType
-from repository.game_status_repository import game_status_repository
-from repository.player_status_repository import player_status_repository
+
+
 
 
 class CreateBarn(Command):
@@ -25,7 +25,7 @@ class CreateBarn(Command):
         if isinstance(self.field_status[self.position[0]][self.position[1]], NoneField):
             self.field_status[self.position[0]][self.position[1]].barn = True
             self.field_status[self.position[0]][self.position[1]].maximum = 1
-            player_status_repository.player_status[game_status_repository.game_status.now_turn_player].farm.field[self.position[0]][self.position[1]] \
+            player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player].farm.field[self.position[0]][self.position[1]] \
                 = self.field_status[self.position[0][self.position[1]]]
             return True
         expanded_field: List[List[Field]] = [[NoneField() for i in range(13)] for i in range(9)]
@@ -64,7 +64,7 @@ class CreateBarn(Command):
         for i in range(3):
             for j in range(5):
                 field_status[i][j] = expanded_field[i*2 + 2][j * 2 + 2]
-        player_status_repository.player_status[game_status_repository.game_status.now_turn_player].farm.field = field_status
+        player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player].farm.field = field_status
         return True
 
     def log(self):

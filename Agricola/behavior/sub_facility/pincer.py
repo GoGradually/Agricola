@@ -5,8 +5,8 @@ from behavior.sub_facility.sub_facility_interface import SubFacilityInterface
 from entity import card_type
 from behavior.roundbehavior.stone_2 import Stone2
 from behavior.roundbehavior.stone_4 import Stone4
-from repository.game_status_repository import game_status_repository
-from repository.player_status_repository import player_status_repository
+
+
 
 
 class Pincer(SubFacilityInterface):
@@ -23,8 +23,8 @@ class Pincer(SubFacilityInterface):
     """
 
     def canUse(self):
-        current_player_cards = player_status_repository.player_status[
-            game_status_repository.game_status.now_turn_player].card.put_sub_card
+        current_player_cards = player_status_repository.get_player_status()[
+            game_status_repository.get_game_status().now_turn_player].card.put_sub_card
         pincer_card_present = any(isinstance(card, Pincer) for card in current_player_cards)
 
         if (isinstance(self.input_behavior, Stone2) or isinstance(self.input_behavior,
@@ -41,10 +41,10 @@ class Pincer(SubFacilityInterface):
     """
 
     def execute(self):
-        player_status_repository.player_status[
-            game_status_repository.game_status.now_turn_player].resource.set_stone(
-            player_status_repository.player_status[
-                game_status_repository.game_status.now_turn_player].resource.stone + 1
+        player_status_repository.get_player_status()[
+            game_status_repository.get_game_status().now_turn_player].resource.set_stone(
+            player_status_repository.get_player_status()[
+                game_status_repository.get_game_status().now_turn_player].resource.stone + 1
         )
         self.log_text = "돌 집게 효과로 돌 하나를 추가로 얻습니다"
         return True
@@ -66,7 +66,7 @@ class Pincer(SubFacilityInterface):
     """
 
     def putDown(self):
-        current_player = player_status_repository.player_status[game_status_repository.game_status.now_turn_player]
+        current_player = player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player]
         current_player.resource.set_wood(current_player.resource.wood - 1)
         current_player.card.hand_sub_card.remove(self)
         current_player.card.put_sub_card.append(self)
@@ -80,5 +80,5 @@ class Pincer(SubFacilityInterface):
     """
 
     def canPutDown(self):
-        return player_status_repository.player_status[
-            game_status_repository.game_status.now_turn_player].resource.wood >= 1
+        return player_status_repository.get_player_status()[
+            game_status_repository.get_game_status().now_turn_player].resource.wood >= 1

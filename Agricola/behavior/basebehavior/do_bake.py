@@ -3,9 +3,8 @@
 빵 굽기 가능 여부 ->
 """
 from behavior.basebehavior.base_behavior_interface import BaseBehaviorInterface
-from behavior.main_facility.dirt_kiln import DirtKiln
-from repository.game_status_repository import game_status_repository
-from repository.player_status_repository import player_status_repository
+
+
 from behavior.main_facility.dirt_kiln import DirtKiln
 from behavior.main_facility.oven1 import Oven1
 from behavior.main_facility.oven2 import Oven2
@@ -16,11 +15,11 @@ from behavior.main_facility.strong_oven2 import StrongOven2
 class DoBake(BaseBehaviorInterface):
     def __init__(self, cookValue):
         self.log_text = ""
-        self.game_status = game_status_repository.game_status
-        self.player_resource = player_status_repository.player_status[
-            game_status_repository.game_status.now_turn_player].resource
-        self.player_MainCard = player_status_repository.player_status[
-            game_status_repository.game_status.now_turn_player].card.putMainCard
+        self.game_status =  game_status_repository.get_game_status()
+        self.player_resource = player_status_repository.get_player_status()[
+            game_status_repository.get_game_status().now_turn_player].resource
+        self.player_MainCard = player_status_repository.get_player_status()[
+            game_status_repository.get_game_status().now_turn_player].card.putMainCard
         self.cookValue = cookValue  # 구울 양
 
     def execute(self):

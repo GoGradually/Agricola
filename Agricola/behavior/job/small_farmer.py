@@ -3,8 +3,8 @@
 """
 from behavior.job.job_interface import JobInterface
 from entity import card_type
-from repository.game_status_repository import game_status_repository
-from repository.player_status_repository import player_status_repository
+
+
 
 
 class SmallFarmer(JobInterface):
@@ -18,9 +18,9 @@ class SmallFarmer(JobInterface):
     :rtype: bool
     """
     def canUse(self):
-        farm = player_status_repository.player_status[game_status_repository.game_status.now_turn_player].farm
+        farm = player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player].farm
         house_count = farm.get_house_count()
-        current_player_cards = player_status_repository.player_status[game_status_repository.game_status.now_turn_player].card.put_job_card
+        current_player_cards = player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player].card.put_job_card
         small_farmer_card_present = any(isinstance(card, SmallFarmer) for card in current_player_cards)
 
         if house_count >= 2 and small_farmer_card_present:
@@ -53,6 +53,6 @@ class SmallFarmer(JobInterface):
     :rtype: bool
     """
     def putDown(self):
-        current_player = player_status_repository.player_status[game_status_repository.game_status.now_turn_player]
+        current_player = player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player]
         current_player.card.hand_job_card.remove(self)
         current_player.card.put_job_card.append(self)

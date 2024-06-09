@@ -12,8 +12,8 @@ from behavior.unitbehavior.playable_sub_facility_listup import PlayableSubCardLi
 from behavior.unitbehavior.purchasable_main_facility_listup import PurchasableMainCardListup
 from behavior.unitbehavior.use_worker import UseWorker
 from command import Command
-from repository.game_status_repository import game_status_repository
-from repository.round_status_repository import round_status_repository
+
+
 
 
 class UpgradeFacilities(BehaviorInterface):

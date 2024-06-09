@@ -6,15 +6,15 @@ from copy import deepcopy
 from command import Command
 from entity.crop_type import CropType
 from entity.field_type import FieldType
-from repository.game_status_repository import game_status_repository
-from repository.player_status_repository import player_status_repository
+
+
 
 
 class SeedPlantValidation(Command):
 
     def __init__(self, plantDict):
         self.plantDict = plantDict
-        self.field_status = deepcopy(player_status_repository.player_status[game_status_repository.game_status.now_turn_player].farm.field)
+        self.field_status = deepcopy(player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player].farm.field)
         self.log_text = ""
 
     def execute(self):
@@ -34,10 +34,10 @@ class SeedPlantValidation(Command):
                 if validationField.fieldType != FieldType.ARABLE and validationField.kind != CropType.NONE:
                     self.log_text = "심을 수 없는 위치 입니다"
                     return False
-        if grain_count > player_status_repository.player_status[game_status_repository.game_status.now_turn_player].resource.grain:
+        if grain_count > player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player].resource.grain:
             self.log_text = "곡식이 모자랍니다."
             return False
-        if vegetable_count > player_status_repository.player_status[game_status_repository.game_status.now_turn_player].resource.vegetable:
+        if vegetable_count > player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player].resource.vegetable:
             self.log_text = "채소가 모자랍니다."
             return False
         self.log_text = "밭 심기 검증 성공"

@@ -5,21 +5,21 @@
 from behavior.behavior_interface import BehaviorInterface
 from command import Command
 from entity.animal_type import AnimalType
-from repository.game_status_repository import game_status_repository
-from repository.player_status_repository import player_status_repository
+
+
 
 
 class Breeding(BehaviorInterface):
     def execute(self):
         ret = {}
-        if player_status_repository.player_status[ \
-                game_status_repository.game_status.now_turn_player].farm.get_cow_count() >= 2:
+        if player_status_repository.get_player_status()[ \
+                game_status_repository.get_game_status().now_turn_player].farm.get_cow_count() >= 2:
             ret[AnimalType.COW] = 1
-        if player_status_repository.player_status[ \
-                game_status_repository.game_status.now_turn_player].farm.get_sheep_count() >= 2:
+        if player_status_repository.get_player_status()[ \
+                game_status_repository.get_game_status().now_turn_player].farm.get_sheep_count() >= 2:
             ret[AnimalType.SHEEP] = 1
-        if player_status_repository.player_status[ \
-                game_status_repository.game_status.now_turn_player].farm.get_pig_count() >= 2:
+        if player_status_repository.get_player_status()[ \
+                game_status_repository.get_game_status().now_turn_player].farm.get_pig_count() >= 2:
             ret[AnimalType.PIG] = 1
         return ret
 

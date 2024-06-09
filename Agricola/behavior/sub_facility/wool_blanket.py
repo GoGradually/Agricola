@@ -3,8 +3,8 @@
 """
 from behavior.sub_facility.sub_facility_interface import SubFacilityInterface
 from entity import card_type
-from repository.game_status_repository import game_status_repository
-from repository.player_status_repository import player_status_repository
+
+
 
 
 class WoolBlanket(SubFacilityInterface):
@@ -52,7 +52,7 @@ class WoolBlanket(SubFacilityInterface):
     """
 
     def putDown(self):
-        current_player = player_status_repository.player_status[game_status_repository.game_status.now_turn_player]
+        current_player = player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player]
         current_player.card.hand_sub_card.remove(self)
         current_player.card.put_sub_card.append(self)
         self.log_text = "양모 담요 카드를 플레이했습니다"
@@ -65,5 +65,5 @@ class WoolBlanket(SubFacilityInterface):
     """
 
     def canPutDown(self):
-        current_player = player_status_repository.player_status[game_status_repository.game_status.now_turn_player]
+        current_player = player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player]
         return current_player.farm.get_sheep_count() >= 5

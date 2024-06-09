@@ -4,8 +4,8 @@
 from behavior.sub_facility.sub_facility_interface import SubFacilityInterface
 from entity import card_type
 from behavior.basicbehavior.daily_labor import DailyLabor
-from repository.game_status_repository import game_status_repository
-from repository.player_status_repository import player_status_repository
+
+
 
 
 class LoamMiningSite(SubFacilityInterface):
@@ -22,8 +22,8 @@ class LoamMiningSite(SubFacilityInterface):
     """
 
     def canUse(self):
-        current_player_cards = player_status_repository.player_status[
-            game_status_repository.game_status.now_turn_player].card.put_sub_card
+        current_player_cards = player_status_repository.get_player_status()[
+            game_status_repository.get_game_status().now_turn_player].card.put_sub_card
         loam_card_present = any(isinstance(card, LoamMiningSite) for card in current_player_cards)
 
         if isinstance(self.input_behavior, DailyLabor) and loam_card_present:
@@ -32,7 +32,7 @@ class LoamMiningSite(SubFacilityInterface):
             return False
 
     def execute(self):
-        current_player = player_status_repository.player_status[game_status_repository.game_status.now_turn_player]
+        current_player = player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player]
         current_player.resource.set_dirt(current_player.resource.dirt + 3)
         self.log_text = "양토 채굴장 효과로 흙 3개를 추가로 가져옵니다"
         return True
@@ -41,7 +41,7 @@ class LoamMiningSite(SubFacilityInterface):
         return self.log_text
 
     def putDown(self):
-        current_player = player_status_repository.player_status[game_status_repository.game_status.now_turn_player]
+        current_player = player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player]
         current_player.card.hand_sub_card.remove(self)
         current_player.card.put_sub_card.append(self)
         current_player.resource.set_food(current_player.resource.food - 1)
@@ -49,7 +49,7 @@ class LoamMiningSite(SubFacilityInterface):
         return True
 
     def canPutDown(self):
-        current_player = player_status_repository.player_status[game_status_repository.game_status.now_turn_player]
+        current_player = player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player]
         return current_player.resource.food >= 1 and len(current_player.card.put_job_card) >= 3
 
 

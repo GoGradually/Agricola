@@ -1,11 +1,11 @@
 import random
 
 from command import Command
-from repository.game_status_repository import game_status_repository
+
 
 
 class RoundCardShuffle(Command):
-    def execute(self):
+    def execute(self, game_status_repository):
         weeks = [
             random.sample(range(0, 4), 4),
             random.sample(range(4, 7), 3),
@@ -19,7 +19,8 @@ class RoundCardShuffle(Command):
 
         for week, offset in zip(weeks, offsets):
             for i, source in enumerate(week):
-                game_status_repository.game_status.set_round_card_order(i + offset, source)
+                game_status_repository.get_game_status().set_round_card_order(i + offset, source)
+        print(game_status_repository.get_game_status().round_card_order)
 
     def log(self):
         pass

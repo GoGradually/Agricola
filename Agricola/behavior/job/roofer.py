@@ -3,8 +3,8 @@
 """
 from behavior.job.job_interface import JobInterface
 from entity import card_type
-from repository.game_status_repository import game_status_repository
-from repository.player_status_repository import player_status_repository
+
+
 
 
 class Roofer(JobInterface):
@@ -21,8 +21,8 @@ class Roofer(JobInterface):
     """
 
     def canUse(self):
-        current_player_cards = player_status_repository.player_status[
-            game_status_repository.game_status.now_turn_player].card.put_job_card
+        current_player_cards = player_status_repository.get_player_status()[
+            game_status_repository.get_game_status().now_turn_player].card.put_job_card
         roofer_card_present = any(isinstance(card, Roofer) for card in current_player_cards)
 
         if roofer_card_present:
@@ -38,17 +38,17 @@ class Roofer(JobInterface):
     """
 
     def execute(self):
-        player_status_repository.player_status[
-            game_status_repository.game_status.now_turn_player].resource.set_food(
-            player_status_repository.player_status[
-                game_status_repository.game_status.now_turn_player].resource.food - 1
+        player_status_repository.get_player_status()[
+            game_status_repository.get_game_status().now_turn_player].resource.set_food(
+            player_status_repository.get_player_status()[
+                game_status_repository.get_game_status().now_turn_player].resource.food - 1
         )
 
         house_count = Farm.get_house_count()
-        player_status_repository.player_status[
-            game_status_repository.game_status.now_turn_player].resource.set_stone(
-            player_status_repository.player_status[
-                game_status_repository.game_status.now_turn_player].resource.stone + house_count
+        player_status_repository.get_player_status()[
+            game_status_repository.get_game_status().now_turn_player].resource.set_stone(
+            player_status_repository.get_player_status()[
+                game_status_repository.get_game_status().now_turn_player].resource.stone + house_count
         )
         self.log_text = "지붕 다지는 사람 사용"
 
@@ -69,6 +69,6 @@ class Roofer(JobInterface):
     """
 
     def putDown(self):
-        current_player = player_status_repository.player_status[game_status_repository.game_status.now_turn_player]
+        current_player = player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player]
         current_player.card.hand_job_card.remove(self)
         current_player.card.put_job_card.append(self)

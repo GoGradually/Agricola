@@ -30,7 +30,7 @@ from behavior.roundbehavior.upgrade_fence import UpgradeFence
 from behavior.roundbehavior.vegetable_seed import VegetableSeed
 
 
-def basic_card_command_factory(self, basic_index):
+def basic_card_command_factory(basic_index):
     if basic_index == 0:
         return Wood1
     if basic_index == 1:
@@ -38,34 +38,34 @@ def basic_card_command_factory(self, basic_index):
     if basic_index == 2:
         return ResourceMarket
     if basic_index == 3:
-        return Dirt1
-    if basic_index == 4:
-        return Theater
-    if basic_index == 5:
-        return FarmExpansion
-    if basic_index == 6:
-        return MeetingPlace
-    if basic_index == 7:
-        return Seed
-    if basic_index == 8:
-        return Cultivate
-    if basic_index == 9:
-        return SideJob1
-    if basic_index == 10:
-        return DailyLabor
-    if basic_index == 11:
-        return Wood3
-    if basic_index == 12:
         return Dirt2
+    if basic_index == 4:
+        return SideJob2
+    if basic_index == 5:
+        return Theater
+    if basic_index == 6:
+        return FarmExpansion
+    if basic_index == 7:
+        return MeetingPlace
+    if basic_index == 8:
+        return Seed
+    if basic_index == 9:
+        return Cultivate
+    if basic_index == 10:
+        return SideJob1
+    if basic_index == 11:
+        return DailyLabor
+    if basic_index == 12:
+        return Fishing
     if basic_index == 13:
         return Reed
     if basic_index == 14:
-        return Fishing
+        return Dirt1
     if basic_index == 15:
-        return SideJob2
+        return Wood3
 
 
-def round_card_command_factory(self, round_index):
+def round_card_command_factory(round_index):
     if self.round_card_order[round_index] == 0:
         return SheepMarket
     if self.round_card_order[round_index] == 1:
@@ -94,3 +94,4 @@ def round_card_command_factory(self, round_index):
         return HurryFamily
     if self.round_card_order[round_index] == 13:
         return UpgradeFence
+    

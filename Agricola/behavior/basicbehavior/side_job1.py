@@ -10,19 +10,19 @@ from behavior.unitbehavior.playable_sub_job_listup import PlayableJobCardListup
 from behavior.unitbehavior.use_worker import UseWorker
 from command import Command
 from entity.basic_behavior_type import BasicBehaviorType
-from repository.game_status_repository import game_status_repository
-from repository.player_status_repository import player_status_repository
-from repository.round_status_repository import round_status_repository
+
+
+
 
 
 class SideJob1(BehaviorInterface):
 
     def __init__(self):
         self.log_text = ""
-        player = game_status_repository.game_status.now_turn_player
+        player = game_status_repository.get_game_status().now_turn_player
         self.player = player
-        self.player_resource = player_status_repository.player_status[player].resource
-        self.player_ownCard = player_status_repository.player_status[player].own_card
+        self.player_resource = player_status_repository.get_player_status()[player].resource
+        self.player_ownCard = player_status_repository.get_player_status()[player].own_card
         self.is_filled = round_status_repository.round_status.put_basic[BasicBehaviorType.SIDE_JOB1.value]
 
     def can_play(self):

@@ -8,17 +8,17 @@ from behavior.behavior_interface import BehaviorInterface
 from behavior.unitbehavior.use_worker import UseWorker
 from command import Command
 from entity.basic_behavior_type import BasicBehaviorType
-from repository.game_status_repository import game_status_repository
-from repository.player_status_repository import player_status_repository
-from repository.round_status_repository import round_status_repository
+
+
+
 
 
 class Wood1(BehaviorInterface):
     def __init__(self):
         self.log_text = ""
-        self.game_status = game_status_repository.game_status
-        player = game_status_repository.game_status.now_turn_player
-        self.player_resource = player_status_repository.player_status[player].resource
+        self.game_status = game_status_repository.get_game_status()
+        player = game_status_repository.get_game_status().now_turn_player
+        self.player_resource = player_status_repository.get_player_status()[player].resource
         self.is_filled = round_status_repository.round_status.put_basic[BasicBehaviorType.WOOD1.value]
 
     def can_play(self):
@@ -26,9 +26,9 @@ class Wood1(BehaviorInterface):
 
     def execute(self):
         self.player_resource.set_wood(
-            self.player_resource.wood + self.game_status.basic_resource[BasicBehaviorType.WOOD1.value])
-        self.log_text = f"나무 {self.game_status.basic_resource[BasicBehaviorType.WOOD1.value]}개를 획득하였습니다."
-        self.game_status.set_basic_resource(BasicBehaviorType.WOOD1.value, 0)
+            self.player_resource.wood + self.get_game_status().basic_resource[BasicBehaviorType.WOOD1.value])
+        self.log_text = f"나무 {self.get_game_status().basic_resource[BasicBehaviorType.WOOD1.value]}개를 획득하였습니다."
+        self.get_game_status().set_basic_resource(BasicBehaviorType.WOOD1.value, 0)
         return [UseWorker]
 
     def log(self):

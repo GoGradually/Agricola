@@ -8,8 +8,8 @@ from behavior.basebehavior.buy_sub_card import BuySubCard
 from behavior.behavior_interface import BehaviorInterface
 from behavior.unitbehavior.playable_sub_facility_listup import PlayableSubCardListup
 from behavior.unitbehavior.use_worker import UseWorker
-from repository.game_status_repository import game_status_repository
-from repository.player_status_repository import player_status_repository
+
+
 
 
 
@@ -17,8 +17,8 @@ class FamilyFacility(BehaviorInterface):
 
     def __init__(self):
         self.log_text = ""
-        player = game_status_repository.game_status.now_turn_player
-        self.player_status = player_status_repository.player_status[player]
+        player = game_status_repository.get_game_status().now_turn_player
+        self.player_status = player_status_repository.get_player_status()[player]
 
     def can_play(self):
         if self.player_status.worker <= self.player_status.farm.get_house_count():

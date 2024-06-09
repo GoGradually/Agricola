@@ -7,16 +7,16 @@
 from behavior.behavior_interface import BehaviorInterface
 from behavior.unitbehavior.use_worker import UseWorker
 from entity.round_behavior_type import RoundBehaviorType
-from repository.game_status_repository import game_status_repository
-from repository.player_status_repository import player_status_repository
-from repository.round_status_repository import round_status_repository
+
+
+
 
 
 class VegetableSeed(BehaviorInterface):
     def __init__(self, player):
         self.log_text = ""
-        self.game_status = game_status_repository.game_status
-        self.player_resource = player_status_repository.player_status[player].resource
+        self.game_status =  game_status_repository.get_game_status()
+        self.player_resource = player_status_repository.get_player_status()[player].resource
 
     def can_play(self):
         return True
