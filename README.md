@@ -7,7 +7,7 @@
 
   하나의 PC를 사용해 4명이서 플레이하는 핫시트 게임으로 제작된다.
 
-  ### 프로젝트 소개 
+  ### 프로젝트 설계
   ![KakaoTalk_20240610_065541273](https://github.com/GoGradually/Agricola/assets/109227134/4ff08754-9eae-46b4-aa9a-5c59db9fdf3f)
 
   
