@@ -1,5 +1,5 @@
 import pytest
-from command.basebehavior.fence_validation import FenceValidation
+from basebehavior.fence_validation import FenceValidation
 from entity.field_type import FieldType
 
 

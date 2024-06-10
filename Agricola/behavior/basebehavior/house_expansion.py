@@ -10,8 +10,8 @@ from copy import deepcopy
 from behavior.basebehavior.base_behavior_interface import BaseBehaviorInterface
 from entity.house_type import HouseType
 from behavior.validation.house_expand_validation import HouseExpandValidation
-
-
+import repository.game_status_repository as  game_status_repository
+import repository.player_status_repository as player_repo
 
 
 class HouseExpansion(BaseBehaviorInterface):
@@ -24,7 +24,7 @@ class HouseExpansion(BaseBehaviorInterface):
         checkValidation = HouseExpandValidation(self.field_status)
         if checkValidation.execute():
             self.log_text = "농장을 확장하는데 성공했습니다."
-            player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player].farm.field = self.field_status
+            player_repo.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player].farm.field = self.field_status
             return True
         else:
             self.log_text = "농장 확장 검증에 실패했습니다"
@@ -34,12 +34,12 @@ class HouseExpansion(BaseBehaviorInterface):
         return self.log_text
 
     def can_play(self):
-        if player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player].resource.reed >= 2:
-            if player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player].farm.house_status == HouseType.WOOD \
-                and player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player].resource.dirt >= 5:
+        if player_repo.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player].resource.reed >= 2:
+            if player_repo.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player].farm.house_status == HouseType.WOOD \
+                and player_repo.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player].resource.dirt >= 5:
                 return True
-            if player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player].farm.house_status == HouseType.DIRT \
-                and player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player].resource.stone >= 5:
+            if player_repo.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player].farm.house_status == HouseType.DIRT \
+                and player_repo.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player].resource.stone >= 5:
                 return True
         self.log_text = "자원이 모자랍니다."
         return False

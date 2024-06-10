@@ -1,12 +1,12 @@
 from gamestate.state import State
-
+import repository.game_status_repository as game_repo
 from turn.check_turn_remain import CheckTurnRemain
 
 
 class TurnEndState(State):
     def next_state(self):
-        if game_status_repository.next_turn_player == -1:
-            if game_status_repository.now_round in [3, 6, 8, 10, 12, 13]:
+        if game_repo.game_status_repository.game_status.next_turn_player == -1:
+            if game_repo.game_status_repository.game_status.now_round in [3, 6, 8, 10, 12, 13]:
                 self.game_context.set_state(self.game_context.harvest_start_state)
             else:
                 self.game_context.set_state(self.game_context.round_end_state)

@@ -13,14 +13,14 @@ from behavior.unitbehavior.use_worker import UseWorker
 
 
 class Facilities(BehaviorInterface):
-    def __init__(self):
+    def __init__(self,game_status,player_status,round_status):
         self.log_text = ""
 
     def can_play(self):
         return True
 
     def execute(self):
-        ret = [PurchasableMainCardListup,BuyMainCard, PlayableSubCardListup, BuySubCard, UseWorker]
+        ret = [UseWorker]
         return ret
 
     def log(self):

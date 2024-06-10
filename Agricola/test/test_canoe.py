@@ -12,7 +12,7 @@ class TestCanoe(unittest.TestCase):
         self.input_behavior = MagicMock(spec=Fishing)
         self.canoe = Canoe(self.input_behavior)
 
-    @patch('repository.game_status_repository.game_status_repository.get_game_status()')
+    @patch('repository.game_status_repository.game_status_repository.game_status_repository.game_status')
     @patch('repository.player_status_repository.player_status_repository.player_status')
     def test_canUse(self, mock_player_status, mock_game_status):
         # Mock the current player and their cards
@@ -30,7 +30,7 @@ class TestCanoe(unittest.TestCase):
         mock_player_status[1].card.putSubCard = []
         self.assertFalse(self.canoe.canUse())
 
-    @patch('repository.game_status_repository.game_status_repository.get_game_status()')
+    @patch('repository.game_status_repository.game_status_repository.game_status_repository.game_status')
     @patch('repository.player_status_repository.player_status_repository.player_status')
     def test_execute(self, mock_player_status, mock_game_status):
         # Mock the current player and their resources
@@ -55,7 +55,7 @@ class TestCanoe(unittest.TestCase):
         self.canoe.log_text = "Test log message"
         self.assertEqual(self.canoe.log(), "Test log message")
 
-    @patch('repository.game_status_repository.game_status_repository.get_game_status()')
+    @patch('repository.game_status_repository.game_status_repository.game_status_repository.game_status')
     @patch('repository.player_status_repository.player_status_repository.player_status')
     def test_putDown(self, mock_player_status, mock_game_status):
         # Mock the current player and their resources/cards
@@ -76,7 +76,7 @@ class TestCanoe(unittest.TestCase):
         self.assertIn(self.canoe, current_player.card.put_sub_card)
         current_player.resource.set_wood.assert_called_with(1)
 
-    @patch('repository.game_status_repository.game_status_repository.get_game_status()')
+    @patch('repository.game_status_repository.game_status_repository.game_status_repository.game_status')
     @patch('repository.player_status_repository.player_status_repository.player_status')
     def test_canPutDown(self, mock_player_status, mock_game_status):
         # Mock the current player and their resources/cards

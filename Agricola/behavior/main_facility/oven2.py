@@ -1,13 +1,13 @@
 """
 흙 3개 화로
 """
-from behavior.basebehavior.dump_animal import DumpAnimal
-from behavior.main_facility.main_facility_interface import MainFacilityInterface
+from Agricola_Back.Agricola.behavior.basebehavior.dump_animal import DumpAnimal
+from Agricola_Back.Agricola.behavior.main_facility.main_facility_interface import MainFacilityInterface
 from entity import card_type
-from entity.main_facility_type import MainFacilityType
-
-
-from entity.animal_type import AnimalType
+from Agricola_Back.Agricola.entity.main_facility_type import MainFacilityType
+import Agricola_Back.Agricola.repository.game_status_repository as  game_status_repository
+import Agricola_Back.Agricola.repository.player_status_repository as player_repo
+from Agricola_Back.Agricola.entity.animal_type import AnimalType
 
 
 class Oven2(MainFacilityInterface):
@@ -16,9 +16,9 @@ class Oven2(MainFacilityInterface):
         self.input_behavior = input_behavior
         self.card_type = card_type.CardType.main_facility
         self.main_card_type = MainFacilityType.OVEN2
-        self.game_status =  game_status_repository.get_game_status()
-        self.player_data = player_status_repository.get_player_status()[
-            game_status_repository.get_game_status().now_turn_player]
+        self.game_status = game_status_repository.game_status_repository.game_status
+        self.player_data = player_repo.player_status_repository.player_status[
+            game_status_repository.game_status_repository.game_status.now_turn_player]
 
     """
     사용 가능 여부를 반환하는 메소드
@@ -91,7 +91,7 @@ class Oven2(MainFacilityInterface):
 
     def purchase(self):
         self.player_data.card.putMainCard.append(self)
-        self.get_game_status().main_facility_status[2] = self.get_game_status().now_turn_player
+        self.game_status.main_facility_status[2] = self.game_status.now_turn_player
         self.player_data.resource.set_dirt(self.player_data.resource.dirt - 3)
 
     """
@@ -101,4 +101,4 @@ class Oven2(MainFacilityInterface):
     """
 
     def canPurchase(self):
-        return self.player_data.resource.dirt >= 3 and  self.get_game_status().main_facility_status[2] == -1
+        return self.player_data.resource.dirt >= 3 and  self.game_status.main_facility_status[2] == -1

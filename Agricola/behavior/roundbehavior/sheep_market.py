@@ -4,33 +4,29 @@
 :return: 획득한 동물이 담긴 큐
 :rtype: deque
 """
-from behavior.basebehavior.gain_animal import GainAnimal
-from behavior.basebehavior.place_animal import PlaceAnimal
-from behavior.behavior_interface import BehaviorInterface
-from behavior.unitbehavior.use_worker import UseWorker
-from command import Command
-from entity.round_behavior_type import RoundBehaviorType
-
-
-
-from entity.animal_type import AnimalType
+from Agricola_Back.Agricola.behavior.basebehavior.gain_animal import GainAnimal
+from Agricola_Back.Agricola.behavior.basebehavior.place_animal import PlaceAnimal
+from Agricola_Back.Agricola.behavior.behavior_interface import BehaviorInterface
+from Agricola_Back.Agricola.behavior.unitbehavior.use_worker import UseWorker
+from Agricola_Back.Agricola.command import Command
+from Agricola_Back.Agricola.entity.round_behavior_type import RoundBehaviorType
+from Agricola_Back.Agricola.entity.animal_type import AnimalType
 
 
 class SheepMarket(BehaviorInterface):
-    def __init__(self, player):
+    def __init__(self,game_status,player_status,round_status):
         self.log_text = ""
-        self.game_status =  game_status_repository.get_game_status()
-        self.player_resource = player_status_repository.get_player_status()[player].resource
+        self.game_status = game_status
 
     def can_play(self):
         return True
 
     def execute(self):
-        sheep_card_index = game_status_repository.get_game_status().get_sheep_card_index()
-        self.log_text = f"양 {self.get_game_status().round_resource[sheep_card_index]}마리를 획득하였습니다."
+        sheep_card_index = self.game_status.get_sheep_card_index()
+        self.log_text = f"양 {self.game_status.round_resource[sheep_card_index]}마리를 획득하였습니다."
         ret = [PlaceAnimal,
-               GainAnimal(AnimalType.SHEEP, self.get_game_status().round_resource[sheep_card_index]), UseWorker]
-        self.get_game_status().set_round_resource(sheep_card_index, 0)
+               GainAnimal(AnimalType.SHEEP, self.game_status.round_resource[sheep_card_index]), UseWorker]
+        self.game_status.set_round_resource(sheep_card_index, 0)
         return ret
 
     def log(self):

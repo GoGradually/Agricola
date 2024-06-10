@@ -1,14 +1,14 @@
 """
 폐품 창고
 """
-from behavior.sub_facility.sub_facility_interface import SubFacilityInterface
+from Agricola_Back.Agricola.behavior.sub_facility.sub_facility_interface import SubFacilityInterface
 from entity import card_type
-from behavior.basicbehavior.meeting_place import MeetingPlace
-from behavior.roundbehavior.family_facility import FamilyFacility
-from behavior.roundbehavior.facilities import Facilities
-from behavior.roundbehavior.upgrade_facilities import UpgradeFacilities
-
-
+from Agricola_Back.Agricola.behavior.basicbehavior.meeting_place import MeetingPlace
+from Agricola_Back.Agricola.behavior.roundbehavior.family_facility import FamilyFacility
+from Agricola_Back.Agricola.behavior.roundbehavior.facilities import Facilities
+from Agricola_Back.Agricola.behavior.roundbehavior.upgrade_facilities import UpgradeFacilities
+import Agricola_Back.Agricola.repository.game_status_repository as  game_status_repository
+import Agricola_Back.Agricola.repository.player_status_repository as player_repo
 
 
 class JunkWarehouse(SubFacilityInterface):
@@ -25,8 +25,8 @@ class JunkWarehouse(SubFacilityInterface):
     """
 
     def canUse(self):
-        current_player_cards = player_status_repository.get_player_status()[
-            game_status_repository.get_game_status().now_turn_player].card.put_sub_card
+        current_player_cards = player_repo.player_status_repository.player_status[
+            game_status_repository.game_status_repository.game_status.now_turn_player].card.put_sub_card
         junk_card_present = any(isinstance(card, JunkWarehouse) for card in current_player_cards)
 
         if isinstance(self.input_behavior,
@@ -43,7 +43,7 @@ class JunkWarehouse(SubFacilityInterface):
     """
 
     def execute(self):
-        current_player = player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player]
+        current_player = player_repo.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player]
         current_player.resource.set_food(current_player.resource.food + 3)
         self.log_text = "폐품 창고 효과로 음식 1개를 추가로 가져옵니다"
         return True
@@ -65,7 +65,7 @@ class JunkWarehouse(SubFacilityInterface):
     """
 
     def putDown(self):
-        current_player = player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player]
+        current_player = player_repo.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player]
         current_player.card.hand_sub_card.remove(self)
         current_player.card.put_sub_card.append(self)
         current_player.resource.set_wood(current_player.resource.wood - 1)
@@ -80,5 +80,5 @@ class JunkWarehouse(SubFacilityInterface):
     """
 
     def canPutDown(self):
-        current_player = player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player]
+        current_player = player_repo.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player]
         return current_player.resource.wood >= 1 and current_player.resource.dirt >= 1

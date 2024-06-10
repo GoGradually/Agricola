@@ -7,7 +7,7 @@ from round.stack_resources import StackResources
 
 class RoundStartState(State):
     def next_state(self):
-        self.game_context.set_state(self.game_context.turn_start)
+        self.game_context.set_state(self.game_context.turn_start_state)
         return self.game_context.state.execute()
 
     def execute(self):

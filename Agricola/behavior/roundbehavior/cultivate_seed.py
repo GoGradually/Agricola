@@ -13,7 +13,7 @@ from behavior.basebehavior.arable_expansion import ArableExpansion
 
 
 class CultivateSeed(BehaviorInterface):
-    def __init__(self):
+    def __init__(self,game_status,player_status,round_status):
         self.log_text = ""
 
     def can_play(self):

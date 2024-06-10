@@ -1,11 +1,11 @@
 """
 거대 농장
 """
-from behavior.sub_facility.sub_facility_interface import SubFacilityInterface
+from Agricola_Back.Agricola.behavior.sub_facility.sub_facility_interface import SubFacilityInterface
 from entity import card_type
-from entity.field_type import FieldType
-
-
+from Agricola_Back.Agricola.entity.field_type import FieldType
+import Agricola_Back.Agricola.repository.player_status_repository as player_repo
+import Agricola_Back.Agricola.repository.game_status_repository as  game_status_repository
 
 
 class GiantFarm(SubFacilityInterface):
@@ -13,7 +13,7 @@ class GiantFarm(SubFacilityInterface):
         self.log_text = None
         self.input_behavior = input_behavior
         self.card_type = card_type.CardType.sub_facility
-        self.game_status =  game_status_repository.get_game_status()
+        self.game_status = game_status_repository.game_status_repository.game_status
 
     """
     사용 가능 여부를 반환하는 메소드
@@ -34,8 +34,8 @@ class GiantFarm(SubFacilityInterface):
     """
 
     def execute(self):
-        current_player = player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player]
-        remainRound = 14 - self.get_game_status().now_round
+        current_player = player_repo.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player]
+        remainRound = 14 - self.game_status.now_round
         current_player.resource.set_food(current_player.resource.food + remainRound * 2)
         # 추가 점수 remainRound
         self.log_text = f"곡식용 삽 효과로 음식 {remainRound * 2}개를 추가로 가져옵니다"
@@ -58,7 +58,7 @@ class GiantFarm(SubFacilityInterface):
     """
 
     def putDown(self):
-        current_player = player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player]
+        current_player = player_repo.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player]
         current_player.card.hand_sub_card.remove(self)
         current_player.card.put_sub_card.append(self)
         self.log_text = "거대 농장 카드를 플레이했습니다"
@@ -71,8 +71,8 @@ class GiantFarm(SubFacilityInterface):
     """
 
     def canPutDown(self):
-        current_player_farm = player_status_repository.get_player_status()[
-            game_status_repository.get_game_status().now_turn_player].farm
+        current_player_farm = player_repo.player_status_repository.player_status[
+            game_status_repository.game_status_repository.game_status.now_turn_player].farm
         for row in current_player_farm:
             for farm in row:
                 if farm.field_type == FieldType.CAGE:

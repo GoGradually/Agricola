@@ -6,19 +6,19 @@
 :return: 실행 결과.
 :rtype: bool
 """
-from behavior.basebehavior.do_bake import DoBake
-from behavior.behavior_interface import BehaviorInterface
-from behavior.unitbehavior.use_worker import UseWorker
-
-
-from behavior.basebehavior.seed_plant import SeedPlant
+from Agricola_Back.Agricola.behavior.basebehavior.do_bake import DoBake
+from Agricola_Back.Agricola.behavior.behavior_interface import BehaviorInterface
+from Agricola_Back.Agricola.behavior.unitbehavior.use_worker import UseWorker
+import Agricola_Back.Agricola.repository.game_status_repository as  game_status_repository
+import Agricola_Back.Agricola.repository.player_status_repository as player_repo
+from Agricola_Back.Agricola.behavior.basebehavior.seed_plant import SeedPlant
 
 
 # Todo
 
 class SeedBake(BehaviorInterface):
 
-    def __init__(self):
+    def __init__(self,game_status,player_status,round_status):
         self.log_text = ""
 
     def can_play(self):
@@ -26,7 +26,7 @@ class SeedBake(BehaviorInterface):
 
     def execute(self):
         ret = [SeedPlant]
-        if player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player].card.put_main_card:
+        if player_repo.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player].card.put_main_card:
             ret.append(DoBake)
         ret.append(UseWorker)
         return ret

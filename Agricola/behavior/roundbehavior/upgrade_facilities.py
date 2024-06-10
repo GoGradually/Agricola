@@ -4,27 +4,27 @@
 :return: 실행 결과.
 :rtype: bool
 """
-from behavior.basebehavior.buy_main_card import BuyMainCard
-from behavior.basebehavior.buy_sub_card import BuySubCard
-from behavior.basebehavior.house_upgrade import HouseUpgrade
-from behavior.behavior_interface import BehaviorInterface
-from behavior.unitbehavior.playable_sub_facility_listup import PlayableSubCardListup
-from behavior.unitbehavior.purchasable_main_facility_listup import PurchasableMainCardListup
-from behavior.unitbehavior.use_worker import UseWorker
-from command import Command
-
-
+from Agricola_Back.Agricola.behavior.basebehavior.buy_main_card import BuyMainCard
+from Agricola_Back.Agricola.behavior.basebehavior.buy_sub_card import BuySubCard
+from Agricola_Back.Agricola.behavior.basebehavior.house_upgrade import HouseUpgrade
+from Agricola_Back.Agricola.behavior.behavior_interface import BehaviorInterface
+from Agricola_Back.Agricola.behavior.unitbehavior.playable_sub_facility_listup import PlayableSubCardListup
+from Agricola_Back.Agricola.behavior.unitbehavior.purchasable_main_facility_listup import PurchasableMainCardListup
+from Agricola_Back.Agricola.behavior.unitbehavior.use_worker import UseWorker
+from Agricola_Back.Agricola.command import Command
+import Agricola_Back.Agricola.repository.game_status_repository as  game_status_repository
+import Agricola_Back.Agricola.repository.round_status_repository as round_repo
 
 
 class UpgradeFacilities(BehaviorInterface):
-    def __init__(self):
+    def __init__(self,game_status,player_status,round_status):
         self.log_text = ""
 
     def can_play(self):
         return HouseUpgrade().can_play()
 
     def execute(self):
-        ret = [HouseUpgrade, PurchasableMainCardListup, BuyMainCard, PlayableSubCardListup, BuySubCard, UseWorker]
+        ret = [HouseUpgrade, UseWorker]
         return ret
 
     def log(self):

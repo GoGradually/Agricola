@@ -1,13 +1,13 @@
 """
 나무꾼 직업 카드
 """
-from behavior.basicbehavior.wood1 import Wood1
-from behavior.basicbehavior.wood2 import Wood2
-from behavior.basicbehavior.wood3 import Wood3
-from behavior.job.job_interface import JobInterface
+from Agricola_Back.Agricola.behavior.basicbehavior.wood1 import Wood1
+from Agricola_Back.Agricola.behavior.basicbehavior.wood2 import Wood2
+from Agricola_Back.Agricola.behavior.basicbehavior.wood3 import Wood3
+from Agricola_Back.Agricola.behavior.job.job_interface import JobInterface
 from entity import card_type
-
-
+import Agricola_Back.Agricola.repository.game_status_repository as  game_status_repository
+import Agricola_Back.Agricola.repository.player_status_repository as player_repo
 
 
 class Lumberjack(JobInterface):
@@ -24,8 +24,8 @@ class Lumberjack(JobInterface):
     """
 
     def canUse(self):
-        current_player_cards = player_status_repository.get_player_status()[
-            game_status_repository.get_game_status().now_turn_player].card.put_job_card
+        current_player_cards = player_repo.player_status_repository.player_status[
+            game_status_repository.game_status_repository.game_status.now_turn_player].card.put_job_card
         lumberjack_card_present = any(isinstance(card, Lumberjack) for card in current_player_cards)
 
         if isinstance(self.input_behavior, Wood1) or isinstance(self.input_behavior, Wood2) or isinstance(
@@ -42,10 +42,10 @@ class Lumberjack(JobInterface):
     """
 
     def execute(self):
-        player_status_repository.get_player_status()[
-            game_status_repository.get_game_status().now_turn_player].resource.set_wood(
-            player_status_repository.get_player_status()[
-                game_status_repository.get_game_status().now_turn_player].resource.wood + 1
+        player_repo.player_status_repository.player_status[
+            game_status_repository.game_status_repository.game_status.now_turn_player].resource.set_wood(
+            player_repo.player_status_repository.player_status[
+                game_status_repository.game_status_repository.game_status.now_turn_player].resource.wood + 1
         )
         self.log_text = "나무꾼 사용"
 
@@ -66,7 +66,7 @@ class Lumberjack(JobInterface):
     """
 
     def putDown(self):
-        current_player = player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player]
+        current_player = player_repo.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player]
         current_player.card.hand_job_card.remove(self)
         current_player.card.put_job_card.append(self)
         self.log_text = "나무꾼 내려 놓기"

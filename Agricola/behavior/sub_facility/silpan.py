@@ -2,18 +2,18 @@
 빵삽
 """
 
-from behavior.sub_facility.sub_facility_interface import SubFacilityInterface
+from Agricola_Back.Agricola.behavior.sub_facility.sub_facility_interface import SubFacilityInterface
 from entity import card_type
-from behavior.basicbehavior.side_job1 import SideJob1
-from behavior.basicbehavior.side_job2 import SideJob2
-
-
-from behavior.basebehavior.do_bake import DoBake
+from Agricola_Back.Agricola.behavior.basicbehavior.side_job1 import SideJob1
+from Agricola_Back.Agricola.behavior.basicbehavior.side_job2 import SideJob2
+import Agricola_Back.Agricola.repository.game_status_repository as  game_status_repository
+import Agricola_Back.Agricola.repository.player_status_repository as player_repo
+from Agricola_Back.Agricola.behavior.basebehavior.do_bake import DoBake
 
 
 class SilPan(SubFacilityInterface):
     def __init__(self, input_behavior):
-        self.player = game_status_repository.get_game_status().now_turn_player
+        self.player = game_status_repository.game_status_repository.game_status.now_turn_player
         self.log_text = None
         self.input_behavior = input_behavior
         self.card_type = card_type.CardType.sub_facility
@@ -26,8 +26,8 @@ class SilPan(SubFacilityInterface):
     """
 
     def canUse(self):
-        current_player_cards = player_status_repository.get_player_status()[
-            game_status_repository.get_game_status().now_turn_player].card.put_sub_card
+        current_player_cards = player_repo.player_status_repository.player_status[
+            game_status_repository.game_status_repository.game_status.now_turn_player].card.put_sub_card
         silpan_card_present = any(isinstance(card, SilPan) for card in current_player_cards)
 
         if (isinstance(self.input_behavior, SideJob1) or isinstance(self.input_behavior,
@@ -66,7 +66,7 @@ class SilPan(SubFacilityInterface):
     """
 
     def putDown(self):
-        current_player = player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player]
+        current_player = player_repo.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player]
         current_player.card.hand_sub_card.remove(self)
         current_player.card.put_sub_card.append(self)
         current_player.resource.set_wood(current_player.resource.wood - 1)
@@ -81,5 +81,5 @@ class SilPan(SubFacilityInterface):
     """
 
     def canPutDown(self):
-        return player_status_repository.get_player_status()[
-            game_status_repository.get_game_status().now_turn_player].resource.wood >= 1
+        return player_repo.player_status_repository.player_status[
+            game_status_repository.game_status_repository.game_status.now_turn_player].resource.wood >= 1

@@ -1,13 +1,13 @@
 """
 가축 상인 직업 카드
 """
-from behavior.job.job_interface import JobInterface
+from Agricola_Back.Agricola.behavior.job.job_interface import JobInterface
 from entity import card_type
-from behavior.roundbehavior.cow_market import CowMarket
-from behavior.roundbehavior.sheep_market import SheepMarket
-from behavior.roundbehavior.pig_market import PigMarket
-
-
+from Agricola_Back.Agricola.behavior.roundbehavior.cow_market import CowMarket
+from Agricola_Back.Agricola.behavior.roundbehavior.sheep_market import SheepMarket
+from Agricola_Back.Agricola.behavior.roundbehavior.pig_market import PigMarket
+import Agricola_Back.Agricola.repository.game_status_repository as  game_status_repository
+import Agricola_Back.Agricola.repository.player_status_repository as player_repo
 
 
 
@@ -23,7 +23,7 @@ class LivestockDealer(JobInterface):
     :rtype: bool
     """
     def canUse(self):
-        current_player_cards = player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player].card.put_job_card
+        current_player_cards = player_repo.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player].card.put_job_card
         livestock_dealer_card_present = any(isinstance(card, LivestockDealer) for card in current_player_cards)
 
         if isinstance(self.input_behavior, CowMarket) or isinstance(self.input_behavior, SheepMarket) or isinstance(self.input_behavior, PigMarket) and livestock_dealer_card_present:
@@ -38,8 +38,8 @@ class LivestockDealer(JobInterface):
     :rtype: bool
     """
     def execute(self):
-        player = game_status_repository.get_game_status().now_turn_player
-        player_resource = player_status_repository.get_player_status()[player].resource
+        player = game_status_repository.game_status_repository.game_status.now_turn_player
+        player_resource = player_repo.player_status_repository.player_status[player].resource
 
         # 음식 자원을 1 감소시킴
         player_resource.set_food(player_resource.food - 1)

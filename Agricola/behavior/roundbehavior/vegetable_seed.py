@@ -4,19 +4,19 @@
 :return: 실행 결과.
 :rtype: bool
 """
-from behavior.behavior_interface import BehaviorInterface
-from behavior.unitbehavior.use_worker import UseWorker
-from entity.round_behavior_type import RoundBehaviorType
-
-
-
+from Agricola_Back.Agricola.behavior.behavior_interface import BehaviorInterface
+from Agricola_Back.Agricola.behavior.unitbehavior.use_worker import UseWorker
+from Agricola_Back.Agricola.entity.round_behavior_type import RoundBehaviorType
+import Agricola_Back.Agricola.repository.game_status_repository as  game_status_repository
+import Agricola_Back.Agricola.repository.player_status_repository as player_repo
+import Agricola_Back.Agricola.repository.round_status_repository as round_repo
 
 
 class VegetableSeed(BehaviorInterface):
-    def __init__(self, player):
+    def __init__(self,game_status,player_status,round_status, player):
         self.log_text = ""
-        self.game_status =  game_status_repository.get_game_status()
-        self.player_resource = player_status_repository.get_player_status()[player].resource
+        self.game_status = game_status_repository.game_status_repository.game_status
+        self.player_resource = player_repo.player_status_repository.player_status[player].resource
 
     def can_play(self):
         return True

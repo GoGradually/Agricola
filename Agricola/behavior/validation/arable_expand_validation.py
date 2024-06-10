@@ -8,11 +8,11 @@ Unit : 준영
 from collections import deque
 from copy import copy, deepcopy
 
-from behavior.basebehavior.base_behavior_interface import BaseBehaviorInterface
-from command import Command
-from entity.field_type import FieldType
-
-
+from Agricola_Back.Agricola.behavior.basebehavior.base_behavior_interface import BaseBehaviorInterface
+from Agricola_Back.Agricola.command import Command
+from Agricola_Back.Agricola.entity.field_type import FieldType
+import Agricola_Back.Agricola.repository.game_status_repository as  game_status_repository
+import Agricola_Back.Agricola.repository.player_status_repository as player_repo
 
 
 def check_connected_component(field_status, field_type):
@@ -48,8 +48,8 @@ class ArableExpandValidation(BaseBehaviorInterface):
         cnt = 0
         for i in range(3):
             for j in range(5):
-                if self.field_status[i][j] == player_status_repository.get_player_status()[
-                    game_status_repository.get_game_status().now_turn_player].farm.field[i][j]:
+                if self.field_status[i][j] == player_repo.player_status_repository.player_status[
+                    game_status_repository.game_status_repository.game_status.now_turn_player].farm.field[i][j]:
                     cnt += 1
         if val <= 1 and cnt == 1:
             self.log_text = "올바른 경작지 배치."

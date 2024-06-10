@@ -6,16 +6,16 @@
 """
 from command import Command
 from entity.house_type import HouseType
-
-
+import repository.game_status_repository as  game_status_repository
+import repository.player_status_repository as player_repo
 
 
 class HouseUpgrade(Command):
     def __init__(self):
-        player = game_status_repository.get_game_status().now_turn_player
-        self.player_house = player_status_repository.get_player_status()[player].farm.house_status
-        self.player_resource = player_status_repository.get_player_status()[player].resource
-        self.player_houseNum = player_status_repository.get_player_status()[player].farm.get_house_count()
+        player = game_status_repository.game_status_repository.game_status.now_turn_player
+        self.player_house = player_repo.player_status_repository.player_status[player].farm.house_status
+        self.player_resource = player_repo.player_status_repository.player_status[player].resource
+        self.player_houseNum = player_repo.player_status_repository.player_status[player].farm.get_house_count()
         self.log_text = ""
 
     def can_play(self):

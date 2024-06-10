@@ -4,21 +4,21 @@
 :return: 실행 결과.
 :rtype: bool
 """
-from behavior.basebehavior.buy_sub_card import BuySubCard
-from behavior.behavior_interface import BehaviorInterface
-from behavior.unitbehavior.playable_sub_facility_listup import PlayableSubCardListup
-from behavior.unitbehavior.use_worker import UseWorker
-
-
+from Agricola_Back.Agricola.behavior.basebehavior.buy_sub_card import BuySubCard
+from Agricola_Back.Agricola.behavior.behavior_interface import BehaviorInterface
+from Agricola_Back.Agricola.behavior.unitbehavior.playable_sub_facility_listup import PlayableSubCardListup
+from Agricola_Back.Agricola.behavior.unitbehavior.use_worker import UseWorker
+import Agricola_Back.Agricola.repository.game_status_repository as  game_status_repository
+import Agricola_Back.Agricola.repository.player_status_repository as player_repo
 
 
 
 class FamilyFacility(BehaviorInterface):
 
-    def __init__(self):
+    def __init__(self,game_status,player_status,round_status):
         self.log_text = ""
-        player = game_status_repository.get_game_status().now_turn_player
-        self.player_status = player_status_repository.get_player_status()[player]
+        player = game_status_repository.game_status_repository.game_status.now_turn_player
+        self.player_status = player_repo.player_status_repository.player_status[player]
 
     def can_play(self):
         if self.player_status.worker <= self.player_status.farm.get_house_count():
@@ -32,7 +32,7 @@ class FamilyFacility(BehaviorInterface):
     def execute(self):
         self.player_status.set_baby(self.player_status.baby + 1)
         self.log_text = "급하지않은 가족 늘리기를 성공했습니다"
-        return [PlayableSubCardListup, BuySubCard, UseWorker]
+        return [UseWorker]
 
     def log(self):
         return self.log_text

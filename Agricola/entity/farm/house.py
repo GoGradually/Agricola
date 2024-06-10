@@ -1,5 +1,5 @@
-from entity.farm.field import Field
-from entity.field_type import FieldType
+from Agricola_Back.Agricola.entity.farm.field import Field
+from Agricola_Back.Agricola.entity.field_type import FieldType
 
 '''
 집 구상 클래스

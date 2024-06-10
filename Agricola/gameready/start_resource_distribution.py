@@ -2,21 +2,20 @@
 게임 시작 후 초기 자원 분배 커맨드
 """
 from command import Command
-
-from Agricola.Agricola.repository.player_status_repository import PlayerStatusRepositoryManager
+import repository.player_status_repository as player_repo
 
 
 class StartResourceDistribution(Command):
-    def execute(self, player_status_repository):
-        player_status_repository.get_player_status()[0].resource.set_food(3)
-        player_status_repository.get_player_status()[0].resource.set_first_turn(True)
-        player_status_repository.get_player_status()[0].set_worker(2)
-        player_status_repository.get_player_status()[1].resource.set_food(4)
-        player_status_repository.get_player_status()[1].set_worker(2)
-        player_status_repository.get_player_status()[2].resource.set_food(4)
-        player_status_repository.get_player_status()[2].set_worker(2)
-        player_status_repository.get_player_status()[3].resource.set_food(4)
-        player_status_repository.get_player_status()[3].set_worker(2)
+    def execute(self):
+        player_repo.player_status_repository.player_status[0].resource.set_food(3)
+        player_repo.player_status_repository.player_status[0].resource.set_first_turn(True)
+        player_repo.player_status_repository.player_status[0].set_worker(2)
+        player_repo.player_status_repository.player_status[1].resource.set_food(4)
+        player_repo.player_status_repository.player_status[1].set_worker(2)
+        player_repo.player_status_repository.player_status[2].resource.set_food(4)
+        player_repo.player_status_repository.player_status[2].set_worker(2)
+        player_repo.player_status_repository.player_status[3].resource.set_food(4)
+        player_repo.player_status_repository.player_status[3].set_worker(2)
 
     def log(self):
         pass

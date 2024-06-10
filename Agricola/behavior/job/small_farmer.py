@@ -1,10 +1,10 @@
 """
 소규모 농부 직업 카드
 """
-from behavior.job.job_interface import JobInterface
+from Agricola_Back.Agricola.behavior.job.job_interface import JobInterface
 from entity import card_type
-
-
+import Agricola_Back.Agricola.repository.game_status_repository as  game_status_repository
+import Agricola_Back.Agricola.repository.player_status_repository as player_repo
 
 
 class SmallFarmer(JobInterface):
@@ -18,9 +18,9 @@ class SmallFarmer(JobInterface):
     :rtype: bool
     """
     def canUse(self):
-        farm = player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player].farm
+        farm = player_repo.player_repo.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player].farm
         house_count = farm.get_house_count()
-        current_player_cards = player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player].card.put_job_card
+        current_player_cards = player_repo.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player].card.put_job_card
         small_farmer_card_present = any(isinstance(card, SmallFarmer) for card in current_player_cards)
 
         if house_count >= 2 and small_farmer_card_present:
@@ -53,6 +53,6 @@ class SmallFarmer(JobInterface):
     :rtype: bool
     """
     def putDown(self):
-        current_player = player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player]
+        current_player = player_repo.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player]
         current_player.card.hand_job_card.remove(self)
         current_player.card.put_job_card.append(self)

@@ -1,13 +1,14 @@
 from gameready.round_card_shuffle import RoundCardShuffle
 from gameready.start_resource_distribution import StartResourceDistribution
 from gamestate.state import State
-
+from gameready.card_distribution import CardDistribution
 
 class GameStartState(State):
     def __init__(self, game_context):
         super().__init__(game_context)
         StartResourceDistribution().execute()
         RoundCardShuffle().execute()
+        CardDistribution().execute()
 
     def next_state(self):
         self.game_context.set_state(self.game_context.card_distribution_state)

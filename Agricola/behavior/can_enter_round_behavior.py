@@ -1,6 +1,6 @@
 from command import Command
-
-
+import repository.game_status_repository as  game_status_repository
+import repository.round_status_repository as round_repo
 
 
 class CanEnterRoundBehavior(Command):
@@ -9,8 +9,8 @@ class CanEnterRoundBehavior(Command):
         self.round = round_index
 
     def execute(self):
-        behavior = game_status_repository.get_game_status().round_card_command_factory(self.round)
-        if round_status_repository.round_status.put_round[self.round] == -1 and \
+        behavior = game_status_repository.game_status_repository.game_status.round_card_command_factory(self.round)
+        if round_repo.round_status_repository.round_status.put_round[self.round] == -1 and \
                 behavior.can_play():
             self.log_text = "행동에 진입 가능합니다."
             return True

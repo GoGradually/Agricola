@@ -3,13 +3,13 @@
 """
 from typing import List
 
-from entity.animal_type import AnimalType
-from entity.farm.cage import Cage
-from entity.farm.field import Field
-from entity.farm.house import House
-from entity.farm.none_field import NoneField
-from entity.field_type import FieldType
-from entity.house_type import HouseType
+from Agricola_Back.Agricola.entity.animal_type import AnimalType
+from Agricola_Back.Agricola.entity.farm.cage import Cage
+from Agricola_Back.Agricola.entity.farm.field import Field
+from Agricola_Back.Agricola.entity.farm.house import House
+from Agricola_Back.Agricola.entity.farm.none_field import NoneField
+from Agricola_Back.Agricola.entity.field_type import FieldType
+from Agricola_Back.Agricola.entity.house_type import HouseType
 
 
 class Farm:
@@ -21,7 +21,7 @@ class Farm:
         self.field[1][0] = House()
         self.horizon_fence = [[False for i in range(5)] for j in range(4)]
         self.vertical_fence = [[False for i in range(6)] for j in range(3)]
-        self.pet = AnimalType.NONE
+        self.pet = AnimalType.COW
 
     def attach(self, observer):
         self.observers.append(observer)
@@ -55,31 +55,32 @@ class Farm:
 
     def get_cow_count(self):
         ret = 0
-        if self.pet == AnimalType.COW:
+        if self.pet == "COW":
             ret += 1
         for fields in self.field:
             for field in fields:
-                if field.kind == AnimalType.COW:
+                if field.kind == "COW":
+                    print(field.count,end="")
                     ret += field.count
         return ret
 
     def get_pig_count(self):
         ret = 0
-        if self.pet == AnimalType.PIG:
+        if self.pet == "PIG":
             ret += 1
         for fields in self.field:
             for field in fields:
-                if field.kind == AnimalType.PIG:
+                if field.kind == "PIG":
                     ret += field.count
         return ret
 
     def get_sheep_count(self):
         ret = 0
-        if self.pet == AnimalType.SHEEP:
+        if self.pet == "SHEEP":
             ret += 1
         for fields in self.field:
             for field in fields:
-                if field.kind == AnimalType.SHEEP:
+                if field.kind == "SHEEP":
                     ret += field.count
         return ret
 

@@ -4,26 +4,26 @@
 :return: 실행 결과.
 :rtype: bool
 """
-from behavior.basebehavior.buy_job_card_1 import BuyJobCard1
-from behavior.behavior_interface import BehaviorInterface
-from behavior.unitbehavior.playable_sub_job_listup import PlayableJobCardListup
-from behavior.unitbehavior.use_worker import UseWorker
-from command import Command
-from entity.basic_behavior_type import BasicBehaviorType
-
-
-
+from Agricola_Back.Agricola.behavior.basebehavior.buy_job_card_1 import BuyJobCard1
+from Agricola_Back.Agricola.behavior.behavior_interface import BehaviorInterface
+from Agricola_Back.Agricola.behavior.unitbehavior.playable_sub_job_listup import PlayableJobCardListup
+from Agricola_Back.Agricola.behavior.unitbehavior.use_worker import UseWorker
+from Agricola_Back.Agricola.command import Command
+from Agricola_Back.Agricola.entity.basic_behavior_type import BasicBehaviorType
+import Agricola_Back.Agricola.repository.game_status_repository as  game_status_repository
+import Agricola_Back.Agricola.repository.player_status_repository as player_repo
+import Agricola_Back.Agricola.repository.round_status_repository as round_repo
 
 
 class SideJob1(BehaviorInterface):
 
     def __init__(self):
         self.log_text = ""
-        player = game_status_repository.get_game_status().now_turn_player
+        player = game_status_repository.game_status_repository.game_status.now_turn_player
         self.player = player
-        self.player_resource = player_status_repository.get_player_status()[player].resource
-        self.player_ownCard = player_status_repository.get_player_status()[player].own_card
-        self.is_filled = round_status_repository.round_status.put_basic[BasicBehaviorType.SIDE_JOB1.value]
+        self.player_resource = player_repo.player_status_repository.player_status[player].resource
+        self.player_ownCard = player_repo.player_status_repository.player_status[player].own_card
+        self.is_filled = round_repo.round_status_repository.round_status.put_basic[BasicBehaviorType.SIDE_JOB1.value]
 
     def can_play(self):
         if self.player_ownCard.hand_job_card and ((not self.player_ownCard.put_job_card) or self.player_resource.food >= 1):
@@ -34,7 +34,7 @@ class SideJob1(BehaviorInterface):
             return False
 
     def execute(self):
-        return [PlayableJobCardListup, BuyJobCard1, UseWorker]
+        return [ UseWorker]
 
     def log(self):
         return self.log_text

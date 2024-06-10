@@ -4,16 +4,16 @@
 :return: 제출 가능한 직업 카드 리스트 반환
 :rtype: list<card_name>
 """
-from command import Command
-
-
+from Agricola_Back.Agricola.command import Command
+import Agricola_Back.Agricola.repository.game_status_repository as  game_status_repository
+import Agricola_Back.Agricola.repository.player_status_repository as player_repo
 
 
 class PlayableJobCardListup(Command):
     def __init__(self):
         self.log_text = ""
-        player = game_status_repository.get_game_status()
-        self.jobList = self.player_ownCard = player_status_repository.get_player_status()[player].own_card.hand_job_card
+        player = game_status_repository.game_status_repository.game_status
+        self.jobList = self.player_ownCard = player_repo.player_status_repository.player_status[player].own_card.hand_job_card
 
     def execute(self):
         self.log_text = "구매 가능한 직업을 확인했습니다"

@@ -12,6 +12,7 @@ class TurnStartState(State):
     def execute(self):
         now_turn_player = ChangeTurn().execute()
         next_turn_player = PredictTurnTurnStart().execute()
+        print(f"현재 턴 : {now_turn_player}, 다음 턴 : {next_turn_player}")
         SaveUndoPoint().execute()
         return f"player ${now_turn_player} 의 턴입니다."
 

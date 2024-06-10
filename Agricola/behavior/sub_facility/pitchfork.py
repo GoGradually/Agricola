@@ -1,13 +1,13 @@
 """
 쇠스랑
 """
-from behavior.sub_facility.sub_facility_interface import SubFacilityInterface
+from Agricola_Back.Agricola.behavior.sub_facility.sub_facility_interface import SubFacilityInterface
 from entity import card_type
-from behavior.basicbehavior.seed import Seed
-
-
-
-from entity.basic_behavior_type import BasicBehaviorType
+from Agricola_Back.Agricola.behavior.basicbehavior.seed import Seed
+import Agricola_Back.Agricola.repository.game_status_repository as  game_status_repository
+import Agricola_Back.Agricola.repository.player_status_repository as player_repo
+import Agricola_Back.Agricola.repository.round_status_repository as round_repo
+from Agricola_Back.Agricola.entity.basic_behavior_type import BasicBehaviorType
 
 
 class Pitchfork(SubFacilityInterface):
@@ -24,10 +24,10 @@ class Pitchfork(SubFacilityInterface):
     """
 
     def canUse(self):
-        current_player_cards = player_status_repository.get_player_status()[
-            game_status_repository.get_game_status().now_turn_player].card.put_sub_card
+        current_player_cards = player_repo.player_status_repository.player_status[
+            game_status_repository.game_status_repository.game_status.now_turn_player].card.put_sub_card
         pitchfork_card_present = any(isinstance(card, Pitchfork) for card in current_player_cards)
-        if isinstance(self.input_behavior, Seed) and round_status_repository.round_status.put_basic[
+        if isinstance(self.input_behavior, Seed) and round_repo.round_status_repository.round_status.put_basic[
             BasicBehaviorType.CULTIVATE] and pitchfork_card_present:
             return True
         else:
@@ -41,7 +41,7 @@ class Pitchfork(SubFacilityInterface):
     """
 
     def execute(self):
-        current_player = player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player]
+        current_player = player_repo.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player]
         current_player.resource.set_food(current_player.resource.food + 3)
         self.log_text = "쇠스랑 효과를 발동해 음식 3개를 얻었습니다"
         return True
@@ -63,7 +63,7 @@ class Pitchfork(SubFacilityInterface):
     """
 
     def putDown(self):
-        current_player = player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player]
+        current_player = player_repo.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player]
         current_player.card.hand_sub_card.remove(self)
         current_player.card.put_sub_card.append(self)
         current_player.resource.set_wood(current_player.resource.wood - 1)
@@ -77,5 +77,5 @@ class Pitchfork(SubFacilityInterface):
     """
 
     def canPutDown(self):
-        return player_status_repository.get_player_status()[
-            game_status_repository.get_game_status().now_turn_player].resource.wood >= 1
+        return player_repo.player_status_repository.player_status[
+            game_status_repository.game_status_repository.game_status.now_turn_player].resource.wood >= 1

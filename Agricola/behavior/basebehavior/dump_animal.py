@@ -7,8 +7,8 @@
 from behavior.basebehavior.base_behavior_interface import BaseBehaviorInterface
 from command import Command
 from entity.animal_type import AnimalType
-
-
+import repository.game_status_repository as  game_status_repository
+import repository.player_status_repository as player_repo
 
 
 class DumpAnimal(BaseBehaviorInterface):
@@ -18,14 +18,14 @@ class DumpAnimal(BaseBehaviorInterface):
         self.log_text = ""
 
     def execute(self):
-        if player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player].farm.field[self.pos[0]][self.pos[1]].count <= 0:
+        if player_repo.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player].farm.field[self.pos[0]][self.pos[1]].count <= 0:
             self.log_text = "동물이 없습니다."
             return False
         else:
-            player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player].farm.field[ \
+            player_repo.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player].farm.field[ \
                 self.pos[0]][self.pos[1]] -= 1
-            if player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player].farm.field[self.pos[0]][self.pos[1]].count == 0:
-                player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player].farm.field[ self.pos[0]][self.pos[1]].kind = AnimalType.NONE
+            if player_repo.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player].farm.field[self.pos[0]][self.pos[1]].count == 0:
+                player_repo.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player].farm.field[ self.pos[0]][self.pos[1]].kind = AnimalType.NONE
             self.log_text = "동물 버리기 완료."
 
     def log(self):

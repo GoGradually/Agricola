@@ -17,6 +17,8 @@ class GameStatus:
         self.round_resource = [0 for i in range(14)]  # 라운드 기준 해당 라운드 칸 내부 자원 수 -> 프론트가 자원 표기하기 좋도록
         self.basic_resource = [0 for i in range(16)]  # 행동 Enum 기준 해당 행동 칸 내부 자원 수
         self.main_facility_status = MainFacilityStatus()
+        self.round_card_put = [None for i in range(14)]
+        self.basic_card_put = [None for i in range(16)]
         self.acted = False
 
     def attach(self, observer):

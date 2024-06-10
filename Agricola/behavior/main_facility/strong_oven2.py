@@ -1,15 +1,13 @@
 """
 흙 5개 화덕
 """
-from behavior.basebehavior.dump_animal import DumpAnimal
-from behavior.main_facility.main_facility_interface import MainFacilityInterface
-from behavior.roundbehavior.cultivate_seed import CultivateSeed
-from behavior.roundbehavior.seed_bake import SeedBake
+from Agricola_Back.Agricola.behavior.basebehavior.dump_animal import DumpAnimal
+from Agricola_Back.Agricola.behavior.main_facility.main_facility_interface import MainFacilityInterface
 from entity import card_type
-from entity.main_facility_type import MainFacilityType
-
-
-from entity.animal_type import AnimalType
+from Agricola_Back.Agricola.entity.main_facility_type import MainFacilityType
+import Agricola_Back.Agricola.repository.game_status_repository as  game_status_repository
+import Agricola_Back.Agricola.repository.player_status_repository as player_repo
+from Agricola_Back.Agricola.entity.animal_type import AnimalType
 
 
 class StrongOven2(MainFacilityInterface):
@@ -18,9 +16,9 @@ class StrongOven2(MainFacilityInterface):
         self.input_behavior = input_behavior
         self.card_type = card_type.CardType.main_facility
         self.main_card_type = MainFacilityType.STRONG_OVEN2
-        self.game_status =  game_status_repository.get_game_status()
-        self.player_data = player_status_repository.get_player_status()[
-            game_status_repository.get_game_status().now_turn_player]
+        self.game_status = game_status_repository.game_status_repository.game_status
+        self.player_data = player_repo.player_status_repository.player_status[
+            game_status_repository.game_status_repository.game_status.now_turn_player]
 
     """
     사용 가능 여부를 반환하는 메소드
@@ -98,16 +96,16 @@ class StrongOven2(MainFacilityInterface):
                 if mainCard.main_card_type in (MainFacilityType.OVEN1, MainFacilityType.OVEN2):
                     self.player_data.card.putMainCard.remove(mainCard)
                     if (mainCard.main_card_type == MainFacilityType.OVEN1):
-                        self.get_game_status().main_facility_status[
+                        self.game_status.main_facility_status[
                             1] = -1
                     else:
-                        self.get_game_status().main_facility_status[
+                        self.game_status.main_facility_status[
                             2] = -1
                     break
         else:
             self.player_data.resource.dirt -= 5
         self.player_data.card.putMainCard.append(self)
-        self.get_game_status().main_facility_status[4] = self.get_game_status().now_turn_player
+        self.game_status.main_facility_status[4] = self.game_status.now_turn_player
 
     """
     카드 구매 가능 여부를 반환하는 메소드
@@ -118,4 +116,4 @@ class StrongOven2(MainFacilityInterface):
     def canPurchase(self):
         chk_oven = any(mainCard.main_card_type in (MainFacilityType.OVEN1, MainFacilityType.OVEN2) for mainCard in
                        self.player_data.card.putMainCard)
-        return (chk_oven or self.player_data.resource.dirt >= 5) and self.get_game_status().main_facility_status[4] == -1
+        return (chk_oven or self.player_data.resource.dirt >= 5) and self.game_status.main_facility_status[4] == -1

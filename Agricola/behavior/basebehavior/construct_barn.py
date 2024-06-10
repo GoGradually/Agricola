@@ -31,7 +31,7 @@ class ConstructBarn(BaseBehaviorInterface):
         if barn_cnt >= 4 or selected_field_type != FieldType.CAGE:
             self.log_text = "외양간 건설이 불가능합니다."
             return False
-        elif player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player].resource.wood < 2:
+        elif player_repo.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player].resource.wood < 2:
             self.log_text = "나무가 모자랍니다."
             return False
         else:
@@ -40,7 +40,7 @@ class ConstructBarn(BaseBehaviorInterface):
                 return False
 
             self.log_text = "외양간 건설 완료"
-            player_status_repository.get_player_status()[game_status_repository.get_game_status().now_turn_player].resource.wood -= 2
+            player_repo.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player].resource.wood -= 2
             return True
 
     def log(self):

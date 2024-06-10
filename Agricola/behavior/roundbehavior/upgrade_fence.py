@@ -4,13 +4,13 @@
 :return: 실행 결과.
 :rtype: bool
 """
-from behavior.basebehavior.construct_fence import ConstructFence
-from behavior.basebehavior.house_upgrade import HouseUpgrade
-from behavior.behavior_interface import BehaviorInterface
-from behavior.unitbehavior.use_worker import UseWorker
-from command import Command
-
-
+from Agricola_Back.Agricola.behavior.basebehavior.construct_fence import ConstructFence
+from Agricola_Back.Agricola.behavior.basebehavior.house_upgrade import HouseUpgrade
+from Agricola_Back.Agricola.behavior.behavior_interface import BehaviorInterface
+from Agricola_Back.Agricola.behavior.unitbehavior.use_worker import UseWorker
+from Agricola_Back.Agricola.command import Command
+import Agricola_Back.Agricola.repository.game_status_repository as  game_status_repository
+import Agricola_Back.Agricola.repository.round_status_repository as round_repo
 
 
 class UpgradeFence(BehaviorInterface):
