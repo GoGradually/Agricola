@@ -7,8 +7,8 @@ from behavior.roundbehavior.cultivate_seed import CultivateSeed
 from behavior.roundbehavior.seed_bake import SeedBake
 from entity import card_type
 from entity.main_facility_type import MainFacilityType
-from repository.game_status_repository import game_status_repository
-from repository.player_status_repository import player_status_repository
+import repository.game_status_repository as game_status_repository
+import repository.player_status_repository as player_status_repository
 from entity.animal_type import AnimalType
 
 
@@ -18,9 +18,9 @@ class StrongOven2(MainFacilityInterface):
         self.input_behavior = input_behavior
         self.card_type = card_type.CardType.main_facility
         self.main_card_type = MainFacilityType.STRONG_OVEN2
-        self.game_status = game_status_repository.game_status
-        self.player_data = player_status_repository.player_status[
-            game_status_repository.game_status.now_turn_player]
+        self.game_status = game_status_repository.game_status_repository.game_status
+        self.player_data = player_status_repository.player_status_repository.player_status[
+            game_status_repository.game_status_repository.game_status.now_turn_player]
         self.score = 1
     """
     사용 가능 여부를 반환하는 메소드

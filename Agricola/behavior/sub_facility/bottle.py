@@ -3,8 +3,8 @@
 """
 from behavior.sub_facility.sub_facility_interface import SubFacilityInterface
 from entity import card_type
-from repository.game_status_repository import game_status_repository
-from repository.player_status_repository import player_status_repository
+import repository.game_status_repository as game_status_repository
+import repository.player_status_repository as player_status_repository
 
 
 class Bottle(SubFacilityInterface):
@@ -52,7 +52,7 @@ class Bottle(SubFacilityInterface):
     """
 
     def putDown(self):
-        current_player = player_status_repository.player_status[game_status_repository.game_status.now_turn_player]
+        current_player = player_status_repository.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player]
         workers = current_player.worker + current_player.baby
         current_player.card.hand_sub_card.remove(self)
         current_player.card.put_sub_card.append(self)
@@ -68,6 +68,6 @@ class Bottle(SubFacilityInterface):
     """
 
     def canPutDown(self):
-        current_player = player_status_repository.player_status[game_status_repository.game_status.now_turn_player]
+        current_player = player_status_repository.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player]
         workers = current_player.worker + current_player.baby
         return current_player.resource.dirt >= workers and current_player.resource.food >= workers

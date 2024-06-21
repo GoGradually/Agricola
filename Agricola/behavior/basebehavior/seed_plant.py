@@ -7,8 +7,8 @@ from copy import deepcopy
 
 from command import Command
 from entity.crop_type import CropType
-from repository.game_status_repository import game_status_repository
-from repository.player_status_repository import player_status_repository
+import repository.game_status_repository as game_status_repository
+import repository.player_status_repository as player_status_repository
 from behavior.validation.seed_plant_validation import SeedPlantValidation
 
 
@@ -31,12 +31,12 @@ class SeedPlant(Command):
             if CropType.GRAIN in self.plantDict:
                 for selectArable in self.plantDict[CropType.GRAIN]:
                     grain_count += 1
-            player_status_repository.player_status[
-                game_status_repository.game_status.now_turn_player].resource.grain -= grain_count
-            player_status_repository.player_status[
-                game_status_repository.game_status.now_turn_player].resource.vegetable -= vegetable_count
-            player_status_repository.player_status[
-                game_status_repository.game_status.now_turn_player].farm.field = self.field_status
+            player_status_repository.player_status_repository.player_status[
+                game_status_repository.game_status_repository.game_status.now_turn_player].resource.grain -= grain_count
+            player_status_repository.player_status_repository.player_status[
+                game_status_repository.game_status_repository.game_status.now_turn_player].resource.vegetable -= vegetable_count
+            player_status_repository.player_status_repository.player_status[
+                game_status_repository.game_status_repository.game_status.now_turn_player].farm.field = self.field_status
             return True
         else:
             self.log_text = seed_plant_validation.log()

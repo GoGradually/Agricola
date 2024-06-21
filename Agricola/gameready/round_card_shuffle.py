@@ -1,7 +1,7 @@
 import random
 
 from command import Command
-from repository.game_status_repository import game_status_repository
+import repository.game_status_repository as game_status_repository
 
 
 class RoundCardShuffle(Command):
@@ -19,7 +19,7 @@ class RoundCardShuffle(Command):
 
         for week, offset in zip(weeks, offsets):
             for i, source in enumerate(week):
-                game_status_repository.game_status.set_round_card_order(i + offset, source)
+                game_status_repository.game_status_repository.game_status.set_round_card_order(i + offset, source)
 
     def log(self):
         pass

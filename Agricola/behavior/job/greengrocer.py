@@ -4,8 +4,8 @@
 from behavior.basicbehavior.seed import Seed
 from behavior.job.job_interface import JobInterface
 from entity import card_type
-from repository.game_status_repository import game_status_repository
-from repository.player_status_repository import player_status_repository
+import repository.game_status_repository as game_status_repository
+import repository.player_status_repository as player_status_repository
 
 
 class Greengrocer(JobInterface):
@@ -23,8 +23,8 @@ class Greengrocer(JobInterface):
     """
 
     def canUse(self):
-        current_player_cards = player_status_repository.player_status[
-            game_status_repository.game_status.now_turn_player].card.put_job_card
+        current_player_cards = player_status_repository.player_status_repository.player_status[
+            game_status_repository.game_status_repository.game_status.now_turn_player].card.put_job_card
         greengrocer_card_present = any(isinstance(card, Greengrocer) for card in current_player_cards)
 
         if isinstance(self.input_behavior, Seed) and greengrocer_card_present:
@@ -40,10 +40,10 @@ class Greengrocer(JobInterface):
     """
 
     def execute(self):
-        player_status_repository.player_status[
-            game_status_repository.game_status.now_turn_player].resource.set_vegetable(
-            player_status_repository.player_status[
-                game_status_repository.game_status.now_turn_player].resource.vegetable + 1
+        player_status_repository.player_status_repository.player_status[
+            game_status_repository.game_status_repository.game_status.now_turn_player].resource.set_vegetable(
+            player_status_repository.player_status_repository.player_status[
+                game_status_repository.game_status_repository.game_status.now_turn_player].resource.vegetable + 1
         )
         self.log_text = "채소 장수 사용"
 
@@ -64,7 +64,7 @@ class Greengrocer(JobInterface):
     """
 
     def putDown(self):
-        current_player = player_status_repository.player_status[game_status_repository.game_status.now_turn_player]
+        current_player = player_status_repository.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player]
         current_player.card.hand_job_card.remove(self)
         current_player.card.put_job_card.append(self)
         self.log_text = "채소 장수 내려 놓음"

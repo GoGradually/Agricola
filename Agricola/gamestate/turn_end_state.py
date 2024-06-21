@@ -1,5 +1,5 @@
 from gamestate.state import State
-from repository.game_status_repository import game_status_repository
+import repository.game_status_repository as game_status_repository
 from turn.check_turn_remain import CheckTurnRemain
 
 

@@ -6,8 +6,8 @@ class ScoreCalculation(Command):
         # 추가 저장없이 한번에 모든 플레이 점수 계산하고싶으면 매개변수없애고 execute 함수 내용 따로 빼놓고 호출해서 인덱스로
         # 점수 가져오면 될듯??
         self.log_text = None
-        from repository.player_status_repository import player_status_repository  # 순환참조 오류 회피
-        self.player_status_list = player_status_repository.player_status
+        import repository.player_status_repository as player_status_repository  # 순환참조 오류 회피
+        self.player_status_list = player_status_repository.player_status_repository.player_status
         self.playerNum = playerNum
 
     def execute(self):

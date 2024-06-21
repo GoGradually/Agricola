@@ -3,12 +3,12 @@
 """
 from command import Command
 from entity.round_behavior_type import round_behavior_reverse_map, RoundBehaviorType
-from repository.game_status_repository import game_status_repository
+import repository.game_status_repository as game_status_repository
 
 
 class StackResources(Command):
     def execute(self):
-        game_status = game_status_repository.game_status
+        game_status = game_status_repository.game_status_repository.game_status
         for i in range(14):
             if game_status.round_card_order[i] == RoundBehaviorType.SHEEP1.value:
                 game_status.set_round_resource(i, game_status.round_resource[i] + 1)

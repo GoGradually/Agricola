@@ -4,8 +4,8 @@
 from behavior.sub_facility.sub_facility_interface import SubFacilityInterface
 from entity import card_type
 from entity.basic_behavior_type import BasicBehaviorType
-from repository.game_status_repository import game_status_repository
-from repository.player_status_repository import player_status_repository
+import repository.game_status_repository as game_status_repository
+import repository.player_status_repository as player_status_repository
 from behavior.basicbehavior.wood1 import Wood1
 from behavior.basicbehavior.wood2 import Wood2
 from behavior.basicbehavior.wood3 import Wood3
@@ -26,8 +26,8 @@ class Basket(SubFacilityInterface):
     """
 
     def canUse(self):
-        current_player_cards = player_status_repository.player_status[
-            game_status_repository.game_status.now_turn_player].card.put_sub_card
+        current_player_cards = player_status_repository.player_status_repository.player_status[
+            game_status_repository.game_status_repository.game_status.now_turn_player].card.put_sub_card
         basket_card_present = any(isinstance(card, Basket) for card in current_player_cards)
 
         if isinstance(self.input_behavior,
@@ -44,13 +44,13 @@ class Basket(SubFacilityInterface):
     """
 
     def execute(self):
-        current_player = player_status_repository.player_status[game_status_repository.game_status.now_turn_player]
+        current_player = player_status_repository.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player]
         if isinstance(self.input_behavior, Wood1):
-            game_status_repository.game_status.set_basic_resource(BasicBehaviorType.WOOD1, 2)
+            game_status_repository.game_status_repository.game_status.set_basic_resource(BasicBehaviorType.WOOD1, 2)
         elif isinstance(self.input_behavior, Wood2):
-            game_status_repository.game_status.set_basic_resource(BasicBehaviorType.WOOD2, 2)
+            game_status_repository.game_status_repository.game_status.set_basic_resource(BasicBehaviorType.WOOD2, 2)
         elif isinstance(self.input_behavior, Wood3):
-            game_status_repository.game_status.set_basic_resource(BasicBehaviorType.WOOD3, 2)
+            game_status_repository.game_status_repository.game_status.set_basic_resource(BasicBehaviorType.WOOD3, 2)
             current_player.resource.set_wood(current_player.resource.wood - 2)  # 일단 나무 전부 가져오고 2개 감소/ 행동에 2개 추가
         current_player.resource.set_food(current_player.resource.food + 3)
         self.log_text = "통나무배 효과로 나무 2개를 행동칸에 남겨놓는 대신 음식 3개를 추가로 가져옵니다"
@@ -73,7 +73,7 @@ class Basket(SubFacilityInterface):
     """
 
     def putDown(self):
-        current_player = player_status_repository.player_status[game_status_repository.game_status.now_turn_player]
+        current_player = player_status_repository.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player]
         current_player.card.hand_sub_card.remove(self)
         current_player.card.put_sub_card.append(self)
         current_player.resource.set_reed(current_player.resource.reed - 1)
@@ -87,5 +87,5 @@ class Basket(SubFacilityInterface):
     """
 
     def canPutDown(self):
-        current_player = player_status_repository.player_status[game_status_repository.game_status.now_turn_player]
+        current_player = player_status_repository.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player]
         return current_player.resource.reed >= 1

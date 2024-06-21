@@ -13,8 +13,8 @@ from copy import deepcopy
 
 from behavior.validation.animal_position_validation import AnimalPositionValidation
 from command import Command
-from repository.game_status_repository import game_status_repository
-from repository.player_status_repository import player_status_repository
+import repository.game_status_repository as game_status_repository
+import repository.player_status_repository as player_status_repository
 
 
 class PlaceAnimal(Command):
@@ -25,8 +25,8 @@ class PlaceAnimal(Command):
     def execute(self):
         if AnimalPositionValidation(self.field_status).execute():
             self.log_text = "동물 배치에 성공했습니다."
-            player_status_repository.player_status[
-                game_status_repository.game_status.now_turn_player].farm.field = self.field_status
+            player_status_repository.player_status_repository.player_status[
+                game_status_repository.game_status_repository.game_status.now_turn_player].farm.field = self.field_status
             return True
         self.log_text = "올바르지 않은 동물 배치 : 동물을 올바르게 배치해주세요."
         return False

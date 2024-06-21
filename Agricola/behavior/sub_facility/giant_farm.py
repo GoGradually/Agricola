@@ -4,8 +4,8 @@
 from behavior.sub_facility.sub_facility_interface import SubFacilityInterface
 from entity import card_type
 from entity.field_type import FieldType
-from repository.player_status_repository import player_status_repository
-from repository.game_status_repository import game_status_repository
+import repository.player_status_repository as player_status_repository
+import repository.game_status_repository as game_status_repository
 
 
 class GiantFarm(SubFacilityInterface):
@@ -13,7 +13,7 @@ class GiantFarm(SubFacilityInterface):
         self.log_text = None
         self.input_behavior = input_behavior
         self.card_type = card_type.CardType.sub_facility
-        self.game_status = game_status_repository.game_status
+        self.game_status = game_status_repository.game_status_repository.game_status
         self.score = 0
     """
     사용 가능 여부를 반환하는 메소드
@@ -34,7 +34,7 @@ class GiantFarm(SubFacilityInterface):
     """
 
     def execute(self):
-        current_player = player_status_repository.player_status[game_status_repository.game_status.now_turn_player]
+        current_player = player_status_repository.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player]
         remainRound = 14 - self.game_status.now_round
         current_player.resource.set_food(current_player.resource.food + remainRound * 2)
         # 추가 점수 remainRound
@@ -58,7 +58,7 @@ class GiantFarm(SubFacilityInterface):
     """
 
     def putDown(self):
-        current_player = player_status_repository.player_status[game_status_repository.game_status.now_turn_player]
+        current_player = player_status_repository.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player]
         current_player.card.hand_sub_card.remove(self)
         current_player.card.put_sub_card.append(self)
         self.log_text = "거대 농장 카드를 플레이했습니다"
@@ -71,8 +71,8 @@ class GiantFarm(SubFacilityInterface):
     """
 
     def canPutDown(self):
-        current_player_farm = player_status_repository.player_status[
-            game_status_repository.game_status.now_turn_player].farm
+        current_player_farm = player_status_repository.player_status_repository.player_status[
+            game_status_repository.game_status_repository.game_status.now_turn_player].farm
         for row in current_player_farm:
             for farm in row:
                 if farm.field_type == FieldType.CAGE:

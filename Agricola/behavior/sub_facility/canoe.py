@@ -5,8 +5,8 @@ import repository.game_status_repository
 from behavior.sub_facility.sub_facility_interface import SubFacilityInterface
 from entity import card_type
 from behavior.basicbehavior.fishing import Fishing
-from repository.game_status_repository import game_status_repository
-from repository.player_status_repository import player_status_repository
+import repository.game_status_repository as game_status_repository
+import repository.player_status_repository as player_status_repository
 
 
 class Canoe(SubFacilityInterface):
@@ -23,8 +23,8 @@ class Canoe(SubFacilityInterface):
     """
 
     def canUse(self):
-        current_player_cards = player_status_repository.player_status[
-            game_status_repository.game_status.now_turn_player].card.put_sub_card
+        current_player_cards = player_status_repository.player_status_repository.player_status[
+            game_status_repository.game_status_repository.game_status.now_turn_player].card.put_sub_card
         canoe_card_present = any(isinstance(card, Canoe) for card in current_player_cards)
 
         if isinstance(self.input_behavior,
@@ -41,7 +41,7 @@ class Canoe(SubFacilityInterface):
     """
 
     def execute(self):
-        current_player = player_status_repository.player_status[game_status_repository.game_status.now_turn_player]
+        current_player = player_status_repository.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player]
         current_player.resource.set_food(current_player.resource.food + 1)
         current_player.resource.set_reed(current_player.resource.reed + 1)
         self.log_text = "통나무배 효과로 음식 1개와 갈대 1개를 추가로 가져옵니다"
@@ -64,7 +64,7 @@ class Canoe(SubFacilityInterface):
     """
 
     def putDown(self):
-        current_player = player_status_repository.player_status[game_status_repository.game_status.now_turn_player]
+        current_player = player_status_repository.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player]
         current_player.card.hand_sub_card.remove(self)
         current_player.card.put_sub_card.append(self)
         current_player.resource.set_wood(current_player.resource.wood - 2)
@@ -78,5 +78,5 @@ class Canoe(SubFacilityInterface):
     """
 
     def canPutDown(self):
-        current_player = player_status_repository.player_status[game_status_repository.game_status.now_turn_player]
+        current_player = player_status_repository.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player]
         return current_player.resource.wood >= 2 and len(current_player.card.put_job_card) >= 1

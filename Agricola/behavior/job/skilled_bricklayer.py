@@ -6,8 +6,8 @@ from behavior.job.livestock_dealer import LivestockDealer
 from behavior.roundbehavior.facilities import Facilities
 from behavior.roundbehavior.upgrade_facilities import UpgradeFacilities
 from entity import card_type
-from repository.game_status_repository import game_status_repository
-from repository.player_status_repository import player_status_repository
+import repository.game_status_repository as game_status_repository
+import repository.player_status_repository as player_status_repository
 
 
 class SkilledBrickLayer(JobInterface):
@@ -22,7 +22,7 @@ class SkilledBrickLayer(JobInterface):
     :rtype: bool
     """
     def canUse(self):
-        current_player_cards = player_status_repository.player_status[game_status_repository.game_status.now_turn_player].card.put_job_card
+        current_player_cards = player_status_repository.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player].card.put_job_card
         skilled_brick_layer_card_present = any(isinstance(card, SkilledBrickLayer) for card in current_player_cards)
 
         if isinstance(self.input_behavior, UpgradeFacilities) or isinstance(self.input_behavior, Facilities) and skilled_brick_layer_card_present:
@@ -37,13 +37,13 @@ class SkilledBrickLayer(JobInterface):
     :rtype: bool
     """
     def execute(self):
-        farm = player_status_repository.player_status[game_status_repository.game_status.now_turn_player].farm
+        farm = player_status_repository.player_status_repository.player_status[game_status_repository.game_status_repository.game_status.now_turn_player].farm
         house_count = farm.get_house_count()
         if house_count >= 3 : # and 흙가마 인 경우:
-            player_status_repository.player_status[
-                game_status_repository.game_status.now_turn_player].resource.set_brick(
-                player_status_repository.player_status[
-                    game_status_repository.game_status.now_turn_player].resource.stone + 1
+            player_status_repository.player_status_repository.player_status[
+                game_status_repository.game_status_repository.game_status.now_turn_player].resource.set_brick(
+                player_status_repository.player_status_repository.player_status[
+                    game_status_repository.game_status_repository.game_status.now_turn_player].resource.stone + 1
             )
         else:
             pass

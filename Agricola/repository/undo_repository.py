@@ -7,9 +7,9 @@ from entity.round_status import RoundStatus
 
 import copy
 
-from repository.game_status_repository import game_status_repository
-from repository.player_status_repository import player_status_repository
-from repository.round_status_repository import round_status_repository
+import repository.game_status_repository as game_status_repository
+import repository.player_status_repository as player_status_repository
+import repository.round_status_repository as round_status_repository
 
 
 class UndoRepository:
@@ -20,9 +20,9 @@ class UndoRepository:
         self.game_status = None
 
     def undo(self):
-        game_status_repository.game_status = self.game_status
-        player_status_repository.player_status = self.player_status
-        round_status_repository.round_status = self.round_status
+        game_status_repository.game_status_repository.game_status = self.game_status
+        player_status_repository.player_status_repository.player_status = self.player_status
+        round_status_repository.round_status_repository.round_status = self.round_status
         self.save(self.game_status, self.player_status, self.round_status)
 
     def save(self, game_status: GameStatus, player_status: PlayerStatus, round_status: RoundStatus):
