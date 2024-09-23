@@ -4,7 +4,7 @@
   202410HY23977_소프트웨어공학 프로젝트
   
   인기 보드게임 아그리콜라를 PC버전으로 이식해
-  1PC로 진행하는 온라인 아그리콜라 개발
+  1PC로 진행하는 오프라인 아그리콜라 개발
 
   ### 프로젝트 설계
   ![KakaoTalk_20240610_065541273](https://github.com/GoGradually/Agricola/assets/109227134/4ff08754-9eae-46b4-aa9a-5c59db9fdf3f)
