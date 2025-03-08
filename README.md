@@ -7,7 +7,7 @@
   1PC로 진행하는 오프라인 아그리콜라 개발
 
   ### 프로젝트 설계
-  ![KakaoTalk_20240610_065541273](https://github.com/GoGradually/Agricola/assets/109227134/4ff08754-9eae-46b4-aa9a-5c59db9fdf3f)
+![image](https://github.com/user-attachments/assets/0cb0cd58-7a67-48a3-819a-272298445cd8)
 
   
 ### 팀원 소개
