@@ -17,7 +17,7 @@
 |:---:|:---:|:---:|
 |[**장종훈**](https://github.com/KKIIO21)|[**한준호**](https://github.com/GoGradually)|[**김준영**](https://github.com/trueu1120)|
 |**FrontEnd**|**Design**|**FrontEnd**|
-|[**김선후**](https://github.com/HiImSUN)|[**우지민**](https://github.com/jim2ning)|[**이홍규**](https://github.com/hongkyuLee)|
+|[**김선후**](https://github.com/ksundev)|[**우지민**](https://github.com/jim2ning)|[**이홍규**](https://github.com/hongkyuLee)|
 
   
 ![js](https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=Jira&logoColor=white) 
