@@ -7,7 +7,10 @@
   1PC로 진행하는 오프라인 아그리콜라 개발
 
   ### 프로젝트 설계
-![image](https://github.com/user-attachments/assets/0cb0cd58-7a67-48a3-819a-272298445cd8)
+  ![image](https://github.com/user-attachments/assets/fb992454-413d-4241-b3f8-9f9304463c6f)
+
+![image](https://github.com/user-attachments/assets/971fbd9c-8c06-474c-ba4d-5648eb6ea1bd)
+
 
   
 ### 팀원 소개
